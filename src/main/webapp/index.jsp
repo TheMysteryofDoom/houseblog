@@ -47,5 +47,17 @@
         </div>
       </div>
     </div>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          Title
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p>Display Blog text here...</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
