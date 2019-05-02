@@ -26,7 +26,7 @@
 		<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4">
 				<div class="form-row">
-					<p class="h4"><b>Login to Blogsite</b></p>
+					<p class="h4"><b>&nbsp;Login to Blogsite</b></p>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
@@ -47,7 +47,7 @@
 					</div>
 					
 				<div class="form-row">
-				<p class="font-size-sm ">New to Blogsite? <a href="#">Sign up now</a></p>
+				<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>
 				</div>
 				</div>
 			</form>

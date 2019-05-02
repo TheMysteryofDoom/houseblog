@@ -26,7 +26,7 @@
 		<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4">
 				<div class="form-row">
-					<p class="h4"><b>Register to Blogsite</b></p>
+					<p class="h4"><b>&nbsp;Register to Blogsite</b></p>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
