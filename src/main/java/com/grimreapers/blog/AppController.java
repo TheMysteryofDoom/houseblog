@@ -74,4 +74,11 @@ public class AppController {
 			return "signup.jsp";
 		}
 	}
+	
+	@RequestMapping("/blog")
+	public String blogPage() {
+		System.out.println("DEBUG: blogPage() function used");
+
+		return "blog.jsp";
+	}
 }
