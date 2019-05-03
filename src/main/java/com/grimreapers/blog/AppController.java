@@ -37,7 +37,7 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
-
+		
 		return "login.jsp";
 	}
 
