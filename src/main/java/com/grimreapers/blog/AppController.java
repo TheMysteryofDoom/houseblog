@@ -1,5 +1,8 @@
 package com.grimreapers.blog;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +35,19 @@ public class AppController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginUser() {
+	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
-
+		
+		session.invalidate();
+		
+		if (dbOperations.passCheck(username, password)) {
+			
+			HttpSession newSession = request.getSession();
+			session = newSession;
+			session.setAttribute("username", username);
+			
+		}
+		
 		return "login.jsp";
 	}
 
