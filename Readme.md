@@ -1,3 +1,3 @@
 # A Blog
 
-#### Write a proper readme later.
+## A site where you are able to post and edit blog entries.
