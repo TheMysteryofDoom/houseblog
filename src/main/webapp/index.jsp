@@ -22,8 +22,8 @@
         <!--Navbar Right Align Buttons -->
   			</ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item"><a class="nav-link" href="login.jsp">LOG IN</a></li>
-          <li class="nav-item"><a class="nav-link" href="signup.jsp">SIGN UP</a></li>
+          <li class="nav-item"><a class="nav-link" href="login">LOG IN</a></li>
+          <li class="nav-item"><a class="nav-link" href="signup">SIGN UP</a></li>
         </ul>
   		</div>
     </div>

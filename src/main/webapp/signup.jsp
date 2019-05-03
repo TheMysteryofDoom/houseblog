@@ -24,7 +24,7 @@
 	
 	<div class="container" style="height: 90%;">
 		<div class="row h-100 justify-content-center align-items-center">
-			<form class="col-4">
+			<form class="col-4" method="post" action="/signup">
 				<div class="form-row">
 					<p class="h4"><b>&nbsp;Register to Blogsite</b></p>
 				</div>
