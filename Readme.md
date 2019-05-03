@@ -1,3 +1,10 @@
 # A Blog
 
-#### Write a proper readme later.
+#### Technologies used:
+	Spring Boot
+	Java
+	CSS
+	JSP
+	Google Firebase
+	
+	
