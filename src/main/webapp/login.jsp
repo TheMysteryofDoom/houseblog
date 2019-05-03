@@ -14,13 +14,8 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-expand navbar-dark bg-dark">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-			</ul>
-		</div>
-	</nav>
+	<!-- navigation bar included here -->
+	<%@include file="navigation_bars/login-signup-nav.html" %>
 	
 	<div class="container" style="height: 90%;">
 		<div class="row h-100 justify-content-center align-items-center">
@@ -53,6 +48,5 @@
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

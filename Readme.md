@@ -8,3 +8,9 @@
 	CSS
 	JSP
 	Google Firebase
+
+#### Instructions for Local Deployment
+	Open Git Bash on the project folder
+	Type the following:
+		mvn spring-boot:run
+	Press Enter
