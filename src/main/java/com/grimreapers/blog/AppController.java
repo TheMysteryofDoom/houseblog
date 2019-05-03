@@ -38,6 +38,16 @@ public class AppController {
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
 		
+		session.invalidate();
+		
+		if (dbOperations.passCheck(username, password)) {
+			
+			HttpSession newSession = request.getSession();
+			session = newSession;
+			session.setAttribute("username", username);
+			
+		}
+		
 		return "login.jsp";
 	}
 
