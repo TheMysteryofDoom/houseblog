@@ -31,22 +31,22 @@
 
   <!--Homepage-->
   <!--Search bar-->
-    <div class="container" style="height: 20%;">
-      <div class="row align-items-center">
-        <div class="col align-self-center">
-          <div class="input-group mb-3">
-           <form class="col-12" method="post">
-             <div class="form-inlne">
-             <div class="col-12">
-                    <input type="text" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
-             </div>
-           </div>
-           </form>
-          </div>
-         </div>
-        </div>
+  <div class="container" style="height: 20%;">
+    <div class="row align-items-center">
+      <div class="col align-self-center">
+      <!--   <form class="col-8 method="post"> -->
+      <!--      <div class="form-inline">-->
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" id="search" type="submit">Search</button>
+                    </div>
+                </div>
+      <!--      </div>-->
+      <!--   </form>-->
       </div>
     </div>
+  </div>
 
     <!-- Add Blog -->
     <div class="container" style="height: 20%">
