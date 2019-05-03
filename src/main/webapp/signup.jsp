@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Blog</title>
+<title>Register</title>
 	<link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -26,7 +26,7 @@
 		<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4">
 				<div class="form-row">
-					<p class="h4"><b>&nbsp;Login to Blogsite</b></p>
+					<p class="h4"><b>&nbsp;Register to Blogsite</b></p>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
@@ -42,13 +42,15 @@
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="btn btn-dark btn-sm btn-block" type="submit"
-							value="Login">
+						<input class="form-control" name="repeatpassword" type="password"
+							placeholder="Repeat Password">
 					</div>
-					
-				<div class="form-row">
-				<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>
 				</div>
+				<div class="form-row">
+					<div class="col-12 mb-3">
+						<input class="btn btn-dark btn-sm btn-block" type="submit"
+							value="Register">
+					</div>
 				</div>
 			</form>
 		</div>
