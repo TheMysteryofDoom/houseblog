@@ -13,8 +13,14 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <!--Naigation Bar-->
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
+	<% if(session.getAttribute("username") != null){
+		 String site = new String("./homepage.jsp");
+	     response.setStatus(response.SC_MOVED_TEMPORARILY);
+	     response.setHeader("Location", site); 
+		}
+	%>
+  <!--Navigation Bar-->
+  <nav class="navbar navbar-expand navbar-dark bg-dark">'
     <div class="container">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
   			<ul class="navbar-nav mr-auto">
