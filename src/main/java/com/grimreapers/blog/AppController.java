@@ -34,7 +34,7 @@ public class AppController {
 		return "login.jsp";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
 		
@@ -48,7 +48,7 @@ public class AppController {
 			
 		}
 		
-		return "login.jsp";
+		return "homepage.jsp";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
