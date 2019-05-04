@@ -16,7 +16,12 @@
 <body>
 	<!-- navigation bar included here -->
 	<!-- check session to show if user is logged in or not -->
-	<%@include file="navigation_bars/guest-nav.html" %>
+	
+	<% if(session.getAttribute("username") == null){ %>
+		<%@include file="navigation_bars/guest-nav.html" %>
+	<% } else { %>
+		<%@include file="navigation_bars/user-nav.html" %>
+	<% } %>
 	
 	<div class="container">
 		<div class="row" style="padding: 20px 0 0 0">
