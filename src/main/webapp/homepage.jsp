@@ -27,16 +27,16 @@
   <div class="container mt-5 mb-5">
     <div class="row align-items-center">
       <div class="col align-self-center">
-      <!--   <form class="col-8 method="post"> -->
-      <!--      <div class="form-inline">-->
-                <div class="input-group mb-3">
+         <form class="col">
+           <div class="form-inline">
+                <div class="input-group mb-3 w-100">
                   <input type="text" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                       <button class="btn btn-outline-secondary" id="search" type="submit">Search</button>
                     </div>
                 </div>
-      <!--      </div>-->
-      <!--   </form>-->
+			</div>
+        </form>
       </div>
     </div>
   </div>
