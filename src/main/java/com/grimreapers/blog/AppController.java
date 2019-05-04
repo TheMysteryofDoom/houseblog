@@ -35,7 +35,7 @@ public class AppController {
 	}
 	
 	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
-	public String homepage() {
+	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
 
 		return "homepage.jsp";
