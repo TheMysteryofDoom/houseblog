@@ -52,7 +52,7 @@ public class AppController {
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
+	public String logoutUser(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: logoutUser() function used");
 		session.invalidate();
 		return "index.jsp";
