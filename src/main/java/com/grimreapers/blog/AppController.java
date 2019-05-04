@@ -79,6 +79,11 @@ public class AppController {
 		System.out.println("DEBUG: Username:" + username);
 		System.out.println("DEBUG: Password:" + password);
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
+		
+		if (!password.equals(repeatpassword)) {
+			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
+			return "signup.jsp";
+		}
 
 		boolean createdUser = dbOperations.registerNewUser(username, password);
 
