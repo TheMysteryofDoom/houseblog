@@ -50,6 +50,13 @@ public class AppController {
 		
 		return "homepage.jsp";
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logoutUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: logoutUser() function used");
+		session.invalidate();
+		return "index.jsp";
+	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signupPage() {
