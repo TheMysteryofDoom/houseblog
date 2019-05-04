@@ -33,6 +33,13 @@ public class AppController {
 
 		return "login.jsp";
 	}
+	
+	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
+	public String homepage() {
+		System.out.println("DEBUG: homepage() function used");
+
+		return "homepage.jsp";
+	}
 
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
