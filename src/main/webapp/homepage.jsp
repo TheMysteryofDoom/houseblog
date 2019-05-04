@@ -13,21 +13,14 @@
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body id="homepage">
-  <!--Naigation Bar-->
-
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <div class="container">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  			<ul class="navbar-nav mr-auto">
-  				<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-        <!--Navbar Right Align Buttons -->
-  			</ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item"><a class="nav-link" href="#">LOGOUT</a></li>
-        </ul>
-  		</div>
-    </div>
-	</nav>
+  <!--Navigation Bar-->
+	<% if(session.getAttribute("username") == null){
+		 String site = new String("./login.jsp");
+	     response.setStatus(response.SC_MOVED_TEMPORARILY);
+	     response.setHeader("Location", site); 
+		}
+	%>
+  <%@include file="navigation_bars/user-nav.html" %>
 
   <!--Homepage-->
   <!--Search bar-->
