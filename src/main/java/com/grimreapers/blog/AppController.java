@@ -33,6 +33,13 @@ public class AppController {
 
 		return "login.jsp";
 	}
+	
+	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
+	public String homepage(HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: homepage() function used");
+
+		return "homepage.jsp";
+	}
 
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
@@ -72,6 +79,11 @@ public class AppController {
 		System.out.println("DEBUG: Username:" + username);
 		System.out.println("DEBUG: Password:" + password);
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
+		
+		if (!password.equals(repeatpassword)) {
+			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
+			return "signup.jsp";
+		}
 
 		boolean createdUser = dbOperations.registerNewUser(username, password);
 
