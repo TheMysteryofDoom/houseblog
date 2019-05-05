@@ -16,40 +16,27 @@
 	<% if(session.getAttribute("username") != null){
 		 String site = new String("./homepage.jsp");
 	     response.setStatus(response.SC_MOVED_TEMPORARILY);
-	     response.setHeader("Location", site); 
+	     response.setHeader("Location", site);
 		}
 	%>
-  <!--Navigation Bar-->
-  <nav class="navbar navbar-expand navbar-dark bg-dark">'
-    <div class="container">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-  			<ul class="navbar-nav mr-auto">
-  				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <!--Navbar Right Align Buttons -->
-  			</ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="nav-item"><a class="nav-link" href="login">LOG IN</a></li>
-          <li class="nav-item"><a class="nav-link" href="signup">SIGN UP</a></li>
-        </ul>
-  		</div>
-    </div>
-	</nav>
+  <!-- navigation bar included here -->
+	<%@include file="navigation_bars/guest-nav.html" %>
 
   <!--Homepage-->
   <!--Search bar-->
-    <div class="container" style="height: 20%;">
+    <div class="container mt-5 mb-5">
       <div class="row align-items-center">
         <div class="col align-self-center">
-        <!--   <form class="col-8 method="post"> -->
-        <!--      <div class="form-inline">-->
-                  <div class="input-group mb-3">
+           <form class="col" method="post">
+             <div class="form-inline">
+                  <div class="input-group mb-3 w-100">
                     <input type="text" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" id="search" type="submit">Search</button>
                       </div>
                   </div>
-        <!--      </div>-->
-        <!--   </form>-->
+             </div>
+           </form>
         </div>
       </div>
     </div>
