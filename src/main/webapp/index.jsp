@@ -54,8 +54,8 @@
     </div>
     <!--Blog Cards -->
     <!--Blog Card 1 -->
-    <div class="container" style="height: 60%;">
-      <div class="card" style="height: 300px">
+    <div class="container mt-3 mb-3">
+      <div class="card">
         <div class="card-header">
           Title
         </div>
@@ -67,8 +67,8 @@
       </div>
     </div>
     <!--Blog Card 2 -->
-    <div class="container" style="height: 60%;">
-      <div class="card" style="height: 300px">
+    <div class="container mt-3 mb-3">
+      <div class="card">
         <div class="card-header">
           Title
         </div>
@@ -80,8 +80,8 @@
       </div>
     </div>
     <!--Blog Card 3-->
-    <div class="container" style="height: 60%;">
-      <div class="card" style="height: 300px">
+    <div class="container mt-3 mb-3">
+      <div class="card">
         <div class="card-header">
           Title
         </div>
