@@ -27,15 +27,13 @@ public class AppController {
 	 * 
 	 * username - String - The currently logged in user
 	 * 
-	 * selfUserPosts - ArrayList<BlogEntry> - The blog posts of the currently logged
-	 * in user
+	 * userPosts - ArrayList<BlogEntry> - The blog posts of a user
 	 * 
 	 * viewSingleEntry - BlogEntry - A single blog post (May or may not be the
 	 * currently logged in user)
 	 * 
 	 * currentblogowner - String - The owner of the blog on display (May or may not
 	 * be the currently logged in user).
-	 * 
 	 * 
 	 */
 
@@ -74,6 +72,7 @@ public class AppController {
 		}
 		
 		session.setAttribute("currentblogowner", username);
+		session.setAttribute("userPosts", dbOperations.retriveUserPosts(username));
 		return "homepage.jsp";
 	}
 
@@ -92,7 +91,7 @@ public class AppController {
 
 			session.setAttribute("username", username);
 			session.setAttribute("currentblogowner", username);
-			session.setAttribute("selfUserPosts", blogentries);
+			session.setAttribute("userPosts", blogentries);
 
 		}
 
@@ -163,7 +162,7 @@ public class AppController {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		}
 		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
-		session.setAttribute("selfUserPosts", blogentries);
+		session.setAttribute("userPosts", blogentries);
 
 		return "homepage.jsp";
 	}
