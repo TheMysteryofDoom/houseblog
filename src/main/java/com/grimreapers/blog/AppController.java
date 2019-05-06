@@ -59,7 +59,7 @@ public class AppController {
 	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
-		
+
 		session.setAttribute("currentblogowner", session.getAttribute("username"));
 
 		return "homepage.jsp";
@@ -158,7 +158,6 @@ public class AppController {
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		}
-
 		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
 		session.setAttribute("selfUserPosts", blogentries);
 
