@@ -44,12 +44,12 @@
     <!-- Add Blog -->
     <div class="container">
       <div class="container">
-        <form action="" method="post">
+        <form action="/postblogentry" method="post">
           <div class="form-group">
             <input type="text" name="title" value="" placeholder="Blog Title">
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="name" rows="8" cols="80" placeholder="Write Something..."></textarea>
+            <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Post</button>
         </form>

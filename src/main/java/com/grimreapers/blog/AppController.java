@@ -33,7 +33,7 @@ public class AppController {
 
 		return "login.jsp";
 	}
-	
+
 	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
@@ -42,22 +42,23 @@ public class AppController {
 	}
 
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
-	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpSession session) {
+	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
-		
+
 		session.invalidate();
-		
+
 		if (dbOperations.passCheck(username, password)) {
-			
+
 			HttpSession newSession = request.getSession();
 			session = newSession;
 			session.setAttribute("username", username);
-			
+
 		}
-		
+
 		return "homepage.jsp";
 	}
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logoutUser(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: logoutUser() function used");
@@ -79,25 +80,39 @@ public class AppController {
 		System.out.println("DEBUG: Username:" + username);
 		System.out.println("DEBUG: Password:" + password);
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
-		
+
 		if (!password.equals(repeatpassword)) {
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
 			return "signup.jsp";
 		}
 
 		boolean createdUser = dbOperations.registerNewUser(username, password);
+		boolean initializedBlog = dbOperations.initializeuserblog(username);
 
-		if (createdUser) {
+		if (createdUser && initializedBlog) {
 			return "login.jsp";
 		} else {
 			return "signup.jsp";
 		}
 	}
-	
+
 	@RequestMapping("/blog")
 	public String blogPage() {
 		System.out.println("DEBUG: blogPage() function used");
 
 		return "blog.jsp";
 	}
+
+	@RequestMapping(value = "/postblogentry", method = RequestMethod.POST)
+	public String postBlogEntry(@RequestParam("title") String title, @RequestParam("content") String content,
+			HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: postBlogEntry() function used");
+		
+		if (!title.equals("")&&!content.equals("")) {
+			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
+		}
+
+		return "homepage.jsp";
+	}
+
 }
