@@ -22,6 +22,23 @@ public class AppController {
 	 * RequestMethod.POST if the function is handling a form
 	 */
 
+	/*
+	 * Session Attributes List:
+	 * 
+	 * username - String - The currently logged in user
+	 * 
+	 * selfUserPosts - ArrayList<BlogEntry> - The blog posts of the currently logged
+	 * in user
+	 * 
+	 * viewSingleEntry - BlogEntry - A single blog post (May or may not be the
+	 * currently logged in user)
+	 * 
+	 * currentblogowner - String - The owner of the blog on display (May or may not
+	 * be the currently logged in user).
+	 * 
+	 * 
+	 */
+
 	@Autowired
 	DBOperations dbOperations;
 
@@ -43,6 +60,17 @@ public class AppController {
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
 
+		session.setAttribute("currentblogowner", session.getAttribute("username"));
+
+		return "homepage.jsp";
+	}
+
+	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
+	public String homepage(@PathVariable String username, HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: variablehomepage() function used");
+
+		session.setAttribute("currentblogowner", username);
+
 		return "homepage.jsp";
 	}
 
@@ -60,6 +88,7 @@ public class AppController {
 			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
 
 			session.setAttribute("username", username);
+			session.setAttribute("currentblogowner", username);
 			session.setAttribute("selfUserPosts", blogentries);
 
 		}
@@ -110,11 +139,12 @@ public class AppController {
 
 		return "blog.jsp";
 	}
-	
+
 	@RequestMapping(value = "/{username}/{blogpathvar}", method = RequestMethod.GET)
-	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request, HttpSession session) {
+	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
+			HttpSession session) {
 		System.out.println("DEBUG: variableBlogPage() function used");
-		
+
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
 		return "blog.jsp";
@@ -128,7 +158,6 @@ public class AppController {
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		}
-		
 		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
 		session.setAttribute("selfUserPosts", blogentries);
 
