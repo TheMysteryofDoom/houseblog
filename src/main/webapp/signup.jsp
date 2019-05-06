@@ -9,19 +9,14 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous">
-	
+
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
 <body>
-	<nav class="navbar navbar-expand navbar-dark bg-dark">
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-			</ul>
-		</div>
-	</nav>
-	
+	<!-- navigation bar included here -->
+	<%@include file="navigation_bars/login-signup-nav.html" %>
+
 	<div class="container" style="height: 90%;">
 		<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4" method="post" action="/signup">
