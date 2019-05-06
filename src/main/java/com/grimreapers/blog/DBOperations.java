@@ -1,21 +1,25 @@
 package com.grimreapers.blog;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.cloud.FirestoreClient;
+import com.grimreapers.blog.model.BlogEntry;
 
 @Service
 public class DBOperations {
@@ -69,18 +73,18 @@ public class DBOperations {
 		Firestore db = FirestoreClient.getFirestore();
 		try {
 			DocumentReference user = db.collection("blogdata").document(username);
-			ApiFuture<DocumentSnapshot> queryDocument = user.get();
-			//DocumentSnapshot document = queryDocument.get();
-			
+			// ApiFuture<DocumentSnapshot> queryDocument = user.get();
+			// DocumentSnapshot document = queryDocument.get();
+
 			Map<String, Object> data = new HashMap<>();
-			
+
 			data.put("profiledesc", "Write something about yourself");
 			data.put("name", username);
-			
+
 			ApiFuture<WriteResult> writeResult = user.set(data, SetOptions.merge());
 			writeResult.get();
 			data.clear();
-			
+
 //			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts").document("sampleentry");
 //			queryDocument = blogposts.get();
 //			//document = queryDocument.get();
@@ -91,34 +95,57 @@ public class DBOperations {
 //			
 //			writeResult = blogposts.set(data, SetOptions.merge());
 //			writeResult.get();
-			
-			
+
 		} catch (Exception e) {
 			return false;
 		}
 
 		return true;
 	}
-	
+
 	public void postBlog(String username, String title, String content) {
 		Firestore db = FirestoreClient.getFirestore();
 		try {
 			String blogpathvar = title.toLowerCase().replace(" ", "-");
-			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts").document(blogpathvar);
-			ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
-			
+			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
+					.document(blogpathvar);
+			//ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
+
 			Map<String, Object> data = new HashMap<>();
 			data.put("blogpathvar", blogpathvar);
 			data.put("title", title);
 			data.put("content", content);
-			
+			data.put("timestamp", Instant.now().toString());
+
 			ApiFuture<WriteResult> writeResult = blogposts.set(data, SetOptions.merge());
 			writeResult.get();
-			
+
 		} catch (Exception e) {
 			System.out.println("DEBUG: Something went wrong while writing your blog post.");
 		}
-		
+
+	}
+
+	public ArrayList<BlogEntry> retriveUserPosts(String username) {
+		Firestore db = FirestoreClient.getFirestore();
+		ArrayList<BlogEntry> blogentries = new ArrayList<BlogEntry>();
+		try {
+
+			ApiFuture<QuerySnapshot> future = db.collection("blogdata").document(username).collection("blogposts")
+					.get();
+
+			List<QueryDocumentSnapshot> documents;
+			documents = future.get().getDocuments();
+			System.out.println("DEBUG: Found "+documents.size()+" blog posts for " + username);
+			for (QueryDocumentSnapshot document : documents) {
+				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
+						document.getString("content"), Instant.parse(document.get("timestamp").toString())));
+			}
+		} catch (Exception e) {
+			System.out.println("DEBUG: Error retrieving Blog Entries");
+		}
+
+		return blogentries;
 	}
 
 }

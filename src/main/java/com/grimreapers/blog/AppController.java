@@ -1,5 +1,7 @@
 package com.grimreapers.blog;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.grimreapers.blog.model.BlogEntry;
 
 @Controller
 public class AppController {
@@ -52,7 +56,10 @@ public class AppController {
 
 			HttpSession newSession = request.getSession();
 			session = newSession;
+			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
+
 			session.setAttribute("username", username);
+			session.setAttribute("userposts", blogentries);
 
 		}
 
@@ -107,8 +114,8 @@ public class AppController {
 	public String postBlogEntry(@RequestParam("title") String title, @RequestParam("content") String content,
 			HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: postBlogEntry() function used");
-		
-		if (!title.equals("")&&!content.equals("")) {
+
+		if (!title.equals("") && !content.equals("")) {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		}
 
