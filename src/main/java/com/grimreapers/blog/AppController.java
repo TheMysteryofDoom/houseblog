@@ -27,7 +27,8 @@ public class AppController {
 	 * 
 	 * username - String - The currently logged in user
 	 * 
-	 * userPosts - ArrayList<BlogEntry> - The blog posts of a user
+	 * userPosts - ArrayList<BlogEntry> - The blog posts of a user (May or may not be the
+	 * currently logged in user)
 	 * 
 	 * viewSingleEntry - BlogEntry - A single blog post (May or may not be the
 	 * currently logged in user)
