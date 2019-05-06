@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,7 +60,7 @@ public class AppController {
 			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
 
 			session.setAttribute("username", username);
-			session.setAttribute("userposts", blogentries);
+			session.setAttribute("selfUserPosts", blogentries);
 
 		}
 
@@ -109,6 +110,15 @@ public class AppController {
 
 		return "blog.jsp";
 	}
+	
+	@RequestMapping(value = "/{username}/{blogpathvar}", method = RequestMethod.GET)
+	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: variableBlogPage() function used");
+		
+		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
+
+		return "blog.jsp";
+	}
 
 	@RequestMapping(value = "/postblogentry", method = RequestMethod.POST)
 	public String postBlogEntry(@RequestParam("title") String title, @RequestParam("content") String content,
@@ -118,6 +128,9 @@ public class AppController {
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		}
+		
+		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
+		session.setAttribute("selfUserPosts", blogentries);
 
 		return "homepage.jsp";
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -109,7 +110,7 @@ public class DBOperations {
 			String blogpathvar = title.toLowerCase().replace(" ", "-");
 			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
 					.document(blogpathvar);
-			//ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
+			// ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
 
 			Map<String, Object> data = new HashMap<>();
 			data.put("blogpathvar", blogpathvar);
@@ -126,6 +127,23 @@ public class DBOperations {
 
 	}
 
+	public BlogEntry viewBlogEntry(String username, String blogpathvar) {
+		Firestore db = FirestoreClient.getFirestore();
+		BlogEntry blogentry = null;
+		try {
+			DocumentReference blog = db.collection("blogdata").document(username).collection("blogposts")
+					.document(blogpathvar);
+			ApiFuture<DocumentSnapshot> queryDocument = blog.get();
+			DocumentSnapshot document = queryDocument.get();
+			blogentry = new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
+					document.getString("content"), Instant.parse(document.get("timestamp").toString()));
+
+		} catch (Exception e) {
+			System.out.println("DEBUG: Error retrieving post");
+		}
+		return blogentry;
+	}
+
 	public ArrayList<BlogEntry> retriveUserPosts(String username) {
 		Firestore db = FirestoreClient.getFirestore();
 		ArrayList<BlogEntry> blogentries = new ArrayList<BlogEntry>();
@@ -136,7 +154,7 @@ public class DBOperations {
 
 			List<QueryDocumentSnapshot> documents;
 			documents = future.get().getDocuments();
-			System.out.println("DEBUG: Found "+documents.size()+" blog posts for " + username);
+			System.out.println("DEBUG: Found " + documents.size() + " blog posts for " + username);
 			for (QueryDocumentSnapshot document : documents) {
 				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
 						document.getString("content"), Instant.parse(document.get("timestamp").toString())));
