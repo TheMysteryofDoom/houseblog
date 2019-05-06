@@ -110,6 +110,17 @@ public class DBOperations {
 			String blogpathvar = title.toLowerCase().replace(" ", "-");
 			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
 					.document(blogpathvar);
+			for (int i = 2;; i++) {
+				ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
+				DocumentSnapshot document = queryDocument.get();
+				if (document.exists() == false) {
+					break;
+				} else {
+					blogpathvar = title.toLowerCase().replace(" ", "-") + "-" + i;
+					blogposts = db.collection("blogdata").document(username).collection("blogposts")
+							.document(blogpathvar);
+				}
+			}
 			// ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
 
 			Map<String, Object> data = new HashMap<>();
@@ -142,6 +153,25 @@ public class DBOperations {
 			System.out.println("DEBUG: Error retrieving post");
 		}
 		return blogentry;
+	}
+
+	public boolean doesUserExist(String username) {
+		Firestore db = FirestoreClient.getFirestore();
+		try {
+			DocumentReference user = db.collection("blogdata").document(username);
+			ApiFuture<DocumentSnapshot> queryDocument = user.get();
+			DocumentSnapshot document = queryDocument.get();
+			
+			if(document.exists()) {
+				System.out.println(username+ "'s blog found.");
+				return true;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("DEBUG: Unknown Exception");
+		}
+
+		return false;
 	}
 
 	public ArrayList<BlogEntry> retriveUserPosts(String username) {

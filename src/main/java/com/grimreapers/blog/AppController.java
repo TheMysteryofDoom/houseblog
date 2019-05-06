@@ -69,8 +69,11 @@ public class AppController {
 	public String homepage(@PathVariable String username, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: variablehomepage() function used");
 
+		if (dbOperations.doesUserExist(username)==false) {
+			return "homepage.jsp"; // If we can remap this into a 404 page that would be nice - Nolan.
+		}
+		
 		session.setAttribute("currentblogowner", username);
-
 		return "homepage.jsp";
 	}
 
@@ -144,7 +147,8 @@ public class AppController {
 	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
 			HttpSession session) {
 		System.out.println("DEBUG: variableBlogPage() function used");
-
+		
+		session.setAttribute("currentblogowner", username);
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
 		return "blog.jsp";
