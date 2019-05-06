@@ -110,12 +110,15 @@ public class DBOperations {
 			String blogpathvar = title.toLowerCase().replace(" ", "-");
 			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
 					.document(blogpathvar);
-			for (int i = 1;; i++) {
+			for (int i = 2;; i++) {
 				ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();
 				DocumentSnapshot document = queryDocument.get();
 				if (document.exists() == false) {
-					blogpathvar = title.toLowerCase().replace(" ", "-") + "-" + i;
 					break;
+				} else {
+					blogpathvar = title.toLowerCase().replace(" ", "-") + "-" + i;
+					blogposts = db.collection("blogdata").document(username).collection("blogposts")
+							.document(blogpathvar);
 				}
 			}
 			// ApiFuture<DocumentSnapshot> queryDocument = blogposts.get();

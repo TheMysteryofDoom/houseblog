@@ -147,7 +147,8 @@ public class AppController {
 	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
 			HttpSession session) {
 		System.out.println("DEBUG: variableBlogPage() function used");
-
+		
+		session.setAttribute("currentblogowner", username);
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
 		return "blog.jsp";
