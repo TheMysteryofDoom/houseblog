@@ -23,8 +23,8 @@
 		<%@include file="navigation_bars/user-nav.html" %>
 	<% } %>
 	
-	<div class="container">
-		<div class="row" style="padding: 20px 0 0 0">
+	<div class="container p-3">
+		<div class="row mt-2">
 			<div class="col-12">
 				<p class="h1">Blog title</p>
 			</div>
@@ -34,7 +34,7 @@
 				<p>By: author</p>
 			</div>
 		</div>
-		<div class="row" style="border: 1px solid #000; padding: 20px 10px">
+		<div class="row p-3" style="border: 1px solid #000;">
 			<div class="col-12">
 				<p class="text-justify">
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Placerat orci nulla pellentesque dignissim enim. In est ante in nibh. Arcu vitae elementum curabitur vitae nunc sed velit dignissim. Enim eu turpis egestas pretium aenean pharetra magna. Ultrices in iaculis nunc sed augue lacus viverra vitae congue. Volutpat lacus laoreet non curabitur gravida arcu ac. At lectus urna duis convallis. Tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Risus quis varius quam quisque id. Porttitor eget dolor morbi non arcu risus quis. Erat nam at lectus urna duis convallis convallis tellus id. Leo duis ut diam quam nulla porttitor. Massa enim nec dui nunc. Arcu bibendum at varius vel pharetra vel turpis nunc eget.
@@ -45,8 +45,7 @@ Eu feugiat pretium nibh ipsum consequat nisl vel pretium lectus. Augue neque gra
 
 Quisque id diam vel quam elementum pulvinar. Sollicitudin tempor id eu nisl nunc mi ipsum. Ridiculus mus mauris vitae ultricies leo integer. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Feugiat vivamus at augue eget arcu dictum. Fusce id velit ut tortor pretium viverra suspendisse potenti. Eu sem integer vitae justo eget. Magna etiam tempor orci eu lobortis. Nisl vel pretium lectus quam id leo in. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Consectetur adipiscing elit ut aliquam purus sit amet luctus. Lorem dolor sed viverra ipsum. Faucibus turpis in eu mi bibendum neque. Facilisis leo vel fringilla est ullamcorper eget nulla facilisi etiam. Amet nisl purus in mollis.
 
-Tincidunt ornare massa eget egestas purus viverra accumsan. Morbi tincidunt augue interdum velit euismod in pellentesque massa. Et malesuada fames ac turpis egestas. Dolor sit amet consectetur adipiscing elit duis tristique. Rhoncus aenean vel elit scelerisque mauris pellentesque. Lobortis scelerisque fermentum dui faucibus. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Odio eu feugiat pretium nibh ipsum consequat. Faucibus scelerisque eleifend donec pretium. Platea dictumst quisque sagittis purus sit amet. Magna ac placerat vestibulum lectus. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Nisi vitae suscipit tellus mauris a diam maecenas.
-				</p>
+Tincidunt ornare massa eget egestas purus viverra accumsan. Morbi tincidunt augue interdum velit euismod in pellentesque massa. Et malesuada fames ac turpis egestas. Dolor sit amet consectetur adipiscing elit duis tristique. Rhoncus aenean vel elit scelerisque mauris pellentesque. Lobortis scelerisque fermentum dui faucibus. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam. Odio eu feugiat pretium nibh ipsum consequat. Faucibus scelerisque eleifend donec pretium. Platea dictumst quisque sagittis purus sit amet. Magna ac placerat vestibulum lectus. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Nisi vitae suscipit tellus mauris a diam maecenas.</p>
 			</div>
 		</div>
 	</div>
