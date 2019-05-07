@@ -14,6 +14,12 @@
 
 </head>
 <body>
+	<% if(session.getAttribute("username") != null){
+		 String site = new String("./homepage.jsp");
+	     response.setStatus(response.SC_MOVED_TEMPORARILY);
+	     response.setHeader("Location", site); 
+		}
+	%>
 	<!-- navigation bar included here -->
 	<%@include file="navigation_bars/login-signup-nav.html" %>
 	
