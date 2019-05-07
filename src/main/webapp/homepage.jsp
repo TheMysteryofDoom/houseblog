@@ -51,7 +51,9 @@
           <div class="form-group">
             <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary">Post</button>
+          <div class="text-right">>
+          	<button type="submit" class="btn btn-primary">Post</button>
+          </div>
         </form>
     </div>
 
