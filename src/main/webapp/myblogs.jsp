@@ -14,12 +14,12 @@
 
 </head>
 <body>
-<%-- 	<% if(session.getAttribute("username") == null){
-		 String site = new String("./login.jsp");
-	     response.setStatus(response.SC_MOVED_TEMPORARILY);
-	     response.setHeader("Location", site); 
-		}
-	%> --%>
+<% if(session.getAttribute("username") == null){
+	 String site = new String("./login.jsp");
+     response.setStatus(response.SC_MOVED_TEMPORARILY);
+     response.setHeader("Location", site); 
+	}
+%> 
 <%@include file="navigation_bars/user-nav.html" %>
 
     <div class="container mt-3 mb-3">
