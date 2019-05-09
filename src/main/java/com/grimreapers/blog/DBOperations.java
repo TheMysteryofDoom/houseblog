@@ -2,6 +2,7 @@ package com.grimreapers.blog;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.cloud.FirestoreClient;
 import com.grimreapers.blog.model.BlogEntry;
@@ -64,6 +66,31 @@ public class DBOperations {
 			return false;
 		} catch (FirebaseAuthException e) {
 			System.out.println("EXCEPTION: " + e.getErrorCode());
+			return false;
+		}
+		return result;
+	}
+	
+	public boolean updateUserPassword(String username, String oldPassword, String newPassword) {
+		
+		FirebaseAuth auth = FirebaseAuth.getInstance();
+		boolean result = false;
+		try {
+			Map<String, Object> claims = new HashMap<>(auth.getUser(username).getCustomClaims());
+			String correctPass = claims.get("pass").toString();
+			
+			if (oldPassword.equals(correctPass)) {
+				System.out.println("DEBUG: Changing password.");
+				claims.put("pass", newPassword);
+				auth.setCustomUserClaims(username, claims);
+				
+			} else {
+				System.out.println("DEBUG: ");
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println("Couldn't Change Password.");
 			return false;
 		}
 		return result;
@@ -189,6 +216,9 @@ public class DBOperations {
 				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
 						document.getString("content"), Instant.parse(document.get("timestamp").toString())));
 			}
+			
+			blogentries.sort(new BlogEntryComparator());
+			
 		} catch (Exception e) {
 			System.out.println("DEBUG: Error retrieving Blog Entries");
 		}

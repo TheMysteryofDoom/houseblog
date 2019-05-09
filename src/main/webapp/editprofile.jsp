@@ -31,20 +31,20 @@
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="username" type="text"
-							placeholder="Username">
+						<input class="form-control" name="oldpassword" type="text"
+							placeholder="Old Password">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="password" type="password"
-							placeholder="Password">
+						<input class="form-control" name="newpassword" type="password"
+							placeholder="New Password">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
 						<input class="form-control" name="repeatpassword" type="password"
-							placeholder="Repeat Password">
+							placeholder="Repeat New Password">
 					</div>
 				</div>
 				<div class="form-row">

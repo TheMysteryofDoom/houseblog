@@ -27,8 +27,8 @@ public class AppController {
 	 * 
 	 * username - String - The currently logged in user
 	 * 
-	 * userPosts - ArrayList<BlogEntry> - The blog posts of a user (May or may not be the
-	 * currently logged in user)
+	 * userPosts - ArrayList<BlogEntry> - The blog posts of a user (May or may not
+	 * be the currently logged in user)
 	 * 
 	 * viewSingleEntry - BlogEntry - A single blog post (May or may not be the
 	 * currently logged in user)
@@ -40,6 +40,9 @@ public class AppController {
 
 	@Autowired
 	DBOperations dbOperations;
+
+	@Autowired
+	DebugOperations debug;
 
 	@RequestMapping("/")
 	public String homePage() {
@@ -55,26 +58,54 @@ public class AppController {
 		return "login.jsp";
 	}
 
+	@RequestMapping(value = "/editprofile", method = RequestMethod.GET)
+	public String editProfilePage() {
+		System.out.println("DEBUG: editProfilePage() function used");
+
+		return "editprofile.jsp";
+	}
+
+	@RequestMapping(value = "/editprofile", method = RequestMethod.POST)
+	public String updateProfilePage(@RequestParam("oldpassword") String oldpassword,
+			@RequestParam("newpassword") String newpassword, @RequestParam("repeatpassword") String repeatpassword,HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: updateProfilePage() function used");
+		
+		if (newpassword.equals(repeatpassword)) {
+			dbOperations.updateUserPassword(session.getAttribute("username").toString(), oldpassword, newpassword);
+		}
+
+		return "editprofile.jsp";
+	}
+
 	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
 
-		session.setAttribute("currentblogowner", session.getAttribute("username"));
+		// TODO function that gets every post
 
 		return "homepage.jsp";
 	}
 
-	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
-	public String homepage(@PathVariable String username, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/myblogs", method = RequestMethod.GET)
+	public String myBlogs(HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: homepage() function used");
+
+		session.setAttribute("currentblogowner", session.getAttribute("username").toString());
+
+		return "myblogs.jsp";
+	}
+
+	@RequestMapping(value = "/blog/{username}", method = RequestMethod.GET)
+	public String myBlogs(@PathVariable String username, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: variablehomepage() function used");
 
-		if (dbOperations.doesUserExist(username)==false) {
+		if (dbOperations.doesUserExist(username) == false) {
 			return "homepage.jsp"; // If we can remap this into a 404 page that would be nice - Nolan.
 		}
-		
+
 		session.setAttribute("currentblogowner", username);
 		session.setAttribute("userPosts", dbOperations.retriveUserPosts(username));
-		return "homepage.jsp";
+		return "myblogs.jsp";
 	}
 
 	@RequestMapping(value = "/homepage", method = RequestMethod.POST)
@@ -89,6 +120,8 @@ public class AppController {
 			HttpSession newSession = request.getSession();
 			session = newSession;
 			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
+
+			debug.printEntries(blogentries);
 
 			session.setAttribute("username", username);
 			session.setAttribute("currentblogowner", username);
@@ -143,11 +176,11 @@ public class AppController {
 		return "blog.jsp";
 	}
 
-	@RequestMapping(value = "/{username}/{blogpathvar}", method = RequestMethod.GET)
+	@RequestMapping(value = "/blog/{username}/{blogpathvar}", method = RequestMethod.GET)
 	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
 			HttpSession session) {
 		System.out.println("DEBUG: variableBlogPage() function used");
-		
+
 		session.setAttribute("currentblogowner", username);
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
