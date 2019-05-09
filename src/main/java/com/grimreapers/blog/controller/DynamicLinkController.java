@@ -30,15 +30,15 @@ public class DynamicLinkController {
 	 * Dynamic URL Construction Guide
 	 * 
 	 * GET Map
-	 * 1) /{username} - View a User's Entire Blog
-	 * 2) /{username}/{blogpathvar} - View a User's Blog Post
-	 * 3) /{username}/{blogpathvar}/edit - Go to the Edit Blog Page for a specific Blog Post.
+	 * 1) /myblog/{username} - View a User's Entire Blog
+	 * 2) /myblog/{username}/{blogpathvar} - View a User's Blog Post
+	 * 3) /myblog/{username}/{blogpathvar}/edit - Go to the Edit Blog Page for a specific Blog Post.
 	 * 
 	 * POST Map
-	 * 1) /{username}/{blogpathvar}/edit - Submit the new details of a blog post and change the entry.
+	 * 1) /myblog/{username}/{blogpathvar}/edit - Submit the new details of a blog post and change the entry.
 	 * 
 	 * DELETE Map
-	 * 1) /{username}/{blogpathvar}/delete - Delete a blog post
+	 * 1) /myblog/{username}/{blogpathvar}/delete - Delete a blog post
 	 * 
 	 */
 
