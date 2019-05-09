@@ -23,6 +23,7 @@ import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.cloud.FirestoreClient;
 import com.grimreapers.blog.model.BlogEntry;
+import com.grimreapers.blog.ultils.BlogEntryComparator;
 
 @Service
 public class DBOperations {
