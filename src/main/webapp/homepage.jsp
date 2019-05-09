@@ -21,9 +21,9 @@
 	<% if(session.getAttribute("username") == null){
 		 String site = new String("./login.jsp");
 	     response.setStatus(response.SC_MOVED_TEMPORARILY);
-	     response.setHeader("Location", site); 
+	     response.setHeader("Location", site);
 		}
-	%> 
+	%>
   <%@include file="navigation_bars/user-nav.html" %>
 
   <!--Homepage-->
@@ -50,12 +50,12 @@
       <div class="container">
         <form action="/postblogentry" method="post">
           <div class="form-group">
-            <input class="input-group" type="text" name="title" value="" placeholder="Blog Title">
+            <input class="form-control" cols="30" type="text" name="title" value="" placeholder="Blog Title">
           </div>
           <div class="form-group">
             <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
           </div>
-          <div class="text-right">>
+          <div class="text-right">
           	<button type="submit" class="btn btn-primary">Post</button>
           </div>
         </form>
@@ -63,11 +63,11 @@
 
     <!--Blog Cards -->
     <div class="container mt-3">
-    
-<% 
+
+<%
 	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
 	blogPostEntries = (ArrayList)session.getAttribute("allBlogPosts");
-	
+
 	if(blogPostEntries!=null){
 		Collections.reverse(blogPostEntries);
 		for(BlogEntry blogPostEntry : blogPostEntries){
@@ -82,6 +82,7 @@
 			          <blockquote class="blockquote mb-0">
 			          	<p><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
+               		  <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
 			        </div>
 			    </div>
 		   	</div>

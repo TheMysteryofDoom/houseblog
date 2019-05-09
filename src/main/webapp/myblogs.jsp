@@ -44,10 +44,12 @@
 			          <blockquote class="blockquote mb-0">
 			          	<p><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
+			          <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
 			        </div>
 		      </div>
 			    <div class="text-right">
-			    	<button type="button" onclick="window.location.href='myblog.jsp'" class="btn btn-success">Edit</button> <button type="button" class="btn btn-danger">Delete</button>
+			    	<button type="button" onclick="window.location.href='edit/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-success">Edit</button>
+			    	<button type="button" onclick="window.location.href='delete/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-danger">Delete</button>
 			    </div>
 		    </div>
 	    </div>

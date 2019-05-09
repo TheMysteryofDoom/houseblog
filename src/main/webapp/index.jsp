@@ -65,6 +65,7 @@
 			          <blockquote class="blockquote mb-0">
 			          	<p><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
+			          <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
 			        </div>
 			    </div>
 		   	</div>
