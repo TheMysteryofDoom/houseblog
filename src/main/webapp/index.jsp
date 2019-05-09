@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
+<%@ page import ="java.util.Collections"%>
+<%@ page import ="com.grimreapers.blog.model.BlogEntry"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -40,57 +44,38 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="card">
-        <div class="card-header">
-          Title
-        </div>
-        <div class="card-body">
-          <blockquote class="blockquote mb-0">
-            <p>Display Blog text here...</p>
-          </blockquote>
-        </div>
-      </div>
+    
+
+   <div class="container mt-3">
+<% 
+	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
+	blogPostEntries = (ArrayList)session.getAttribute("allBlogPosts");
+	int ctr = 0;
+	
+	if(blogPostEntries!=null){
+		Collections.reverse(blogPostEntries);
+		for(BlogEntry blogPostEntry : blogPostEntries){
+%>
+    <div class="row mb-3">
+		   	<div class="col">
+		   		<div class="card" id="<%= ctr%>">
+			        <div class="card-header">
+			          <p class="h4"><%= blogPostEntry.getTitle() %> </p>
+			        </div>
+			        <div class="card-body mh-100">
+			          <blockquote class="blockquote mb-0">
+			          	<p><%= blogPostEntry.getContent() %> </p>
+			          </blockquote>
+			          <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
+			        </div>
+			    </div>
+		   	</div>
+	   	</div>
+ <%	
+	 ++ctr;
+	 }
+	} %>
     </div>
-    <!--Blog Cards -->
-    <!--Blog Card 1 -->
-    <div class="container mt-3 mb-3">
-      <div class="card">
-        <div class="card-header">
-          Title
-        </div>
-        <div class="card-body mh-100">
-          <blockquote class="blockquote mb-0">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper eget nulla facilisi etiam dignissim. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Et ultrices neque ornare aenean euismod elementum. Suspendisse in est ante in. Vitae tempus quam pellentesque nec nam aliquam. Egestas maecenas pharetra convallis posuere morbi leo urna molestie at. In est ante in nibh mauris. Massa massa ultricies mi quis hendrerit dolor magna eget est. Faucibus pulvinar elementum integer enim. Odio tempor orci dapibus ultrices in iaculis. Ut consequat semper viverra nam libero. Malesuada fames ac turpis egestas integer eget aliquet nibh. Suspendisse ultrices gravida dictum fusce. Ante in nibh mauris cursus mattis molestie a iaculis.</p>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-    <!--Blog Card 2 -->
-    <div class="container mt-3 mb-3">
-      <div class="card">
-        <div class="card-header">
-          Title
-        </div>
-        <div class="card-body mh-100">
-          <blockquote class="blockquote mb-0">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper eget nulla facilisi etiam dignissim. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Et ultrices neque ornare aenean euismod elementum. Suspendisse in est ante in. Vitae tempus quam pellentesque nec nam aliquam. Egestas maecenas pharetra convallis posuere morbi leo urna molestie at. In est ante in nibh mauris. Massa massa ultricies mi quis hendrerit dolor magna eget est. Faucibus pulvinar elementum integer enim. Odio tempor orci dapibus ultrices in iaculis. Ut consequat semper viverra nam libero. Malesuada fames ac turpis egestas integer eget aliquet nibh. Suspendisse ultrices gravida dictum fusce. Ante in nibh mauris cursus mattis molestie a iaculis.</p>
-          </blockquote>
-        </div>
-      </div>
-    </div>
-    <!--Blog Card 3-->
-    <div class="container mt-3 mb-3">
-      <div class="card">
-        <div class="card-header">
-          Title
-        </div>
-        <div class="card-body mh-100">
-          <blockquote class="blockquote mb-0">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper eget nulla facilisi etiam dignissim. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Et ultrices neque ornare aenean euismod elementum. Suspendisse in est ante in. Vitae tempus quam pellentesque nec nam aliquam. Egestas maecenas pharetra convallis posuere morbi leo urna molestie at. In est ante in nibh mauris. Massa massa ultricies mi quis hendrerit dolor magna eget est. Faucibus pulvinar elementum integer enim. Odio tempor orci dapibus ultrices in iaculis. Ut consequat semper viverra nam libero. Malesuada fames ac turpis egestas integer eget aliquet nibh. Suspendisse ultrices gravida dictum fusce. Ante in nibh mauris cursus mattis molestie a iaculis.</p>
-          </blockquote>
-        </div>
-      </div>
     </div>
 </body>
 </html>
