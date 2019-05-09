@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +39,6 @@ public class AppController {
 	 * 
 	 * allBlogPosts - ArrayList<BlogEntry> - Every blog post in the website (Caution: May end up big.)
 	 * 
-	 * Dynamic URL Construction Guide
-	 * 
-	 * 1) /myblog/<username>/<blogpathvar> - Goes to a singluar blog post
-	 * 2) /myblog/<username> - Goes to the entire blog of a specific user
-	 * 
 	 */
 
 	@Autowired
@@ -64,7 +58,7 @@ public class AppController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginPage() {
+	public String loginPage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginPage() function used");
 		
 		return "login.jsp";
@@ -180,31 +174,6 @@ public class AppController {
 		session.removeAttribute("allBlogPosts");
 		
 		return "blog.jsp";
-	}
-
-	@RequestMapping(value = "/myblog/{username}/{blogpathvar}", method = RequestMethod.GET)
-	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
-			HttpSession session) {
-		System.out.println("DEBUG: variableBlogPage() function used");
-		session.removeAttribute("allBlogPosts");
-		session.setAttribute("currentblogowner", username);
-		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
-
-		return "blog.jsp";
-	}
-	
-
-	@RequestMapping(value = "/myblog/{username}", method = RequestMethod.GET)
-	public String myBlogs(@PathVariable String username, HttpServletRequest request, HttpSession session) {
-		System.out.println("DEBUG: variablehomepage() function used");
-		session.removeAttribute("allBlogPosts");
-		if (dbOperations.doesUserExist(username) == false) {
-			return "homepage.jsp"; // If we can remap this into a 404 page that would be nice - Nolan.
-		}
-
-		session.setAttribute("currentblogowner", username);
-		session.setAttribute("userPosts", dbOperations.retriveUserPosts(username));
-		return "myblogs.jsp";
 	}
 
 	@RequestMapping(value = "/postblogentry", method = RequestMethod.POST)
