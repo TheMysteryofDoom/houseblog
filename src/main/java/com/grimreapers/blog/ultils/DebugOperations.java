@@ -1,4 +1,4 @@
-package com.grimreapers.blog;
+package com.grimreapers.blog.ultils;
 
 import java.util.ArrayList;
 

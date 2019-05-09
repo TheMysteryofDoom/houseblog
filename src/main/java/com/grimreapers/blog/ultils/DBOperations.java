@@ -1,4 +1,4 @@
-package com.grimreapers.blog;
+package com.grimreapers.blog.ultils;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.cloud.FirestoreClient;
 import com.grimreapers.blog.model.BlogEntry;
-import com.grimreapers.blog.ultils.BlogEntryComparator;
 
 @Service
 public class DBOperations {
@@ -71,25 +70,24 @@ public class DBOperations {
 		}
 		return result;
 	}
-	
+
 	public boolean updateUserPassword(String username, String oldPassword, String newPassword) {
-		
+
 		FirebaseAuth auth = FirebaseAuth.getInstance();
 		boolean result = false;
 		try {
 			Map<String, Object> claims = new HashMap<>(auth.getUser(username).getCustomClaims());
 			String correctPass = claims.get("pass").toString();
-			
+
 			if (oldPassword.equals(correctPass)) {
 				System.out.println("DEBUG: Changing password.");
 				claims.put("pass", newPassword);
 				auth.setCustomUserClaims(username, claims);
-				
+
 			} else {
 				System.out.println("DEBUG: ");
 			}
-			
-			
+
 		} catch (Exception e) {
 			System.out.println("Couldn't Change Password.");
 			return false;
@@ -189,12 +187,12 @@ public class DBOperations {
 			DocumentReference user = db.collection("blogdata").document(username);
 			ApiFuture<DocumentSnapshot> queryDocument = user.get();
 			DocumentSnapshot document = queryDocument.get();
-			
-			if(document.exists()) {
-				System.out.println(username+ "'s blog found.");
+
+			if (document.exists()) {
+				System.out.println(username + "'s blog found.");
 				return true;
 			}
-			
+
 		} catch (Exception e) {
 			System.out.println("DEBUG: Unknown Exception");
 		}
@@ -217,13 +215,37 @@ public class DBOperations {
 				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
 						document.getString("content"), Instant.parse(document.get("timestamp").toString())));
 			}
-			
+
 			blogentries.sort(new BlogEntryComparator());
-			
+
 		} catch (Exception e) {
 			System.out.println("DEBUG: Error retrieving Blog Entries");
 		}
 
+		return blogentries;
+	}
+
+	public ArrayList<BlogEntry> getAllPosts() {
+		Firestore db = FirestoreClient.getFirestore();
+		ArrayList<BlogEntry> blogentries = new ArrayList<BlogEntry>();
+		try {
+			ApiFuture<QuerySnapshot> future = db.collection("blogdata").get();
+			List<QueryDocumentSnapshot> documents;
+			documents = future.get().getDocuments();
+			for (QueryDocumentSnapshot document : documents) {
+				ApiFuture<QuerySnapshot> future2 = db.collection("blogdata").document(document.getId())
+						.collection("blogposts").get();
+				List<QueryDocumentSnapshot> documents2;
+				documents2 = future2.get().getDocuments();
+				for (QueryDocumentSnapshot document2 : documents2) {
+					blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
+							document.getString("content"), Instant.parse(document.get("timestamp").toString())));
+				}
+			}
+			blogentries.sort(new BlogEntryComparator());
+		} catch (Exception e) {
+
+		}
 		return blogentries;
 	}
 
