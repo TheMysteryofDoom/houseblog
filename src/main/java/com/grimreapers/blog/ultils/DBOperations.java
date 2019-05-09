@@ -230,21 +230,25 @@ public class DBOperations {
 		ArrayList<BlogEntry> blogentries = new ArrayList<BlogEntry>();
 		try {
 			ApiFuture<QuerySnapshot> future = db.collection("blogdata").get();
+
 			List<QueryDocumentSnapshot> documents;
 			documents = future.get().getDocuments();
 			for (QueryDocumentSnapshot document : documents) {
-				ApiFuture<QuerySnapshot> future2 = db.collection("blogdata").document(document.getId())
+				System.out.println("DEBUG: User: "+document.getId());
+				String bloguser = document.getId();
+				ApiFuture<QuerySnapshot> future2 = db.collection("blogdata").document(bloguser)
 						.collection("blogposts").get();
+				
 				List<QueryDocumentSnapshot> documents2;
 				documents2 = future2.get().getDocuments();
 				for (QueryDocumentSnapshot document2 : documents2) {
-					blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
-							document.getString("content"), Instant.parse(document.get("timestamp").toString())));
+					blogentries.add(new BlogEntry(document2.getString("blogpathvar"), document2.getString("title"),
+							document2.getString("content"), Instant.parse(document2.get("timestamp").toString())));
 				}
 			}
 			blogentries.sort(new BlogEntryComparator());
 		} catch (Exception e) {
-
+			System.out.println("DEBUG: "+e.getMessage());
 		}
 		return blogentries;
 	}

@@ -54,8 +54,11 @@ public class AppController {
 	DebugOperations debug;
 
 	@RequestMapping("/")
-	public String homePage() {
+	public String homePage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homePage() function used");
+		
+		ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
+		session.setAttribute("allBlogPosts", allblogentries);
 
 		return "index.jsp";
 	}
@@ -121,7 +124,7 @@ public class AppController {
 			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
 			ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
 
-			debug.printEntries(blogentries);
+			debug.printEntries(allblogentries);
 
 			session.setAttribute("username", username);
 			session.setAttribute("currentblogowner", username);
