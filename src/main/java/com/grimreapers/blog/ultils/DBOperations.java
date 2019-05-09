@@ -241,6 +241,8 @@ public class DBOperations {
 			documents = future.get().getDocuments();
 			System.out.println("DEBUG: Found " + documents.size() + " blog posts for " + username);
 			for (QueryDocumentSnapshot document : documents) {
+				System.out.println("DEBUG blogpathvar:" + document.getString("blogpathvar"));
+				System.out.println("DEBUG username:" + username);
 				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
 						document.getString("content"), Instant.parse(document.get("timestamp").toString()), username));
 			}
