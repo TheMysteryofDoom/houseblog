@@ -2,7 +2,6 @@ package com.grimreapers.blog.ultils;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import com.google.cloud.firestore.SetOptions;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.cloud.FirestoreClient;
 import com.grimreapers.blog.model.BlogEntry;
@@ -161,7 +159,25 @@ public class DBOperations {
 		} catch (Exception e) {
 			System.out.println("DEBUG: Something went wrong while writing your blog post.");
 		}
+	}
 
+	public void editBlog(String username, String blogpathvar, String title, String content) {
+		Firestore db = FirestoreClient.getFirestore();
+		try {
+			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
+					.document(blogpathvar);
+
+			Map<String, Object> data = new HashMap<>();
+			data.put("title", title);
+			data.put("content", content);
+			data.put("timestamp", Instant.now().toString());
+
+			ApiFuture<WriteResult> writeResult = blogposts.set(data, SetOptions.merge());
+			writeResult.get();
+
+		} catch (Exception e) {
+			System.out.println("DEBUG: Something went wrong while writing your blog post.");
+		}
 	}
 
 	public BlogEntry viewBlogEntry(String username, String blogpathvar) {
@@ -173,7 +189,7 @@ public class DBOperations {
 			ApiFuture<DocumentSnapshot> queryDocument = blog.get();
 			DocumentSnapshot document = queryDocument.get();
 			blogentry = new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
-					document.getString("content"), Instant.parse(document.get("timestamp").toString()));
+					document.getString("content"), Instant.parse(document.get("timestamp").toString()), username);
 
 		} catch (Exception e) {
 			System.out.println("DEBUG: Error retrieving post");
@@ -200,6 +216,19 @@ public class DBOperations {
 		return false;
 	}
 
+	public void deleteBlogPost(String username, String blogpathvar) {
+		Firestore db = FirestoreClient.getFirestore();
+
+		try {
+			DocumentReference blogposts = db.collection("blogdata").document(username).collection("blogposts")
+					.document(blogpathvar);
+			ApiFuture<WriteResult> writeResult = blogposts.delete();
+			writeResult.get();
+		} catch (Exception e) {
+
+		}
+	}
+
 	public ArrayList<BlogEntry> retriveUserPosts(String username) {
 		Firestore db = FirestoreClient.getFirestore();
 		ArrayList<BlogEntry> blogentries = new ArrayList<BlogEntry>();
@@ -212,8 +241,10 @@ public class DBOperations {
 			documents = future.get().getDocuments();
 			System.out.println("DEBUG: Found " + documents.size() + " blog posts for " + username);
 			for (QueryDocumentSnapshot document : documents) {
+				System.out.println("DEBUG blogpathvar:" + document.getString("blogpathvar"));
+				System.out.println("DEBUG username:" + username);
 				blogentries.add(new BlogEntry(document.getString("blogpathvar"), document.getString("title"),
-						document.getString("content"), Instant.parse(document.get("timestamp").toString())));
+						document.getString("content"), Instant.parse(document.get("timestamp").toString()), username));
 			}
 
 			blogentries.sort(new BlogEntryComparator());
@@ -234,21 +265,22 @@ public class DBOperations {
 			List<QueryDocumentSnapshot> documents;
 			documents = future.get().getDocuments();
 			for (QueryDocumentSnapshot document : documents) {
-				System.out.println("DEBUG: User: "+document.getId());
+				System.out.println("DEBUG: User: " + document.getId());
 				String bloguser = document.getId();
-				ApiFuture<QuerySnapshot> future2 = db.collection("blogdata").document(bloguser)
-						.collection("blogposts").get();
-				
+				ApiFuture<QuerySnapshot> future2 = db.collection("blogdata").document(bloguser).collection("blogposts")
+						.get();
+
 				List<QueryDocumentSnapshot> documents2;
 				documents2 = future2.get().getDocuments();
 				for (QueryDocumentSnapshot document2 : documents2) {
 					blogentries.add(new BlogEntry(document2.getString("blogpathvar"), document2.getString("title"),
-							document2.getString("content"), Instant.parse(document2.get("timestamp").toString())));
+							document2.getString("content"), Instant.parse(document2.get("timestamp").toString()),
+							bloguser));
 				}
 			}
 			blogentries.sort(new BlogEntryComparator());
 		} catch (Exception e) {
-			System.out.println("DEBUG: "+e.getMessage());
+			System.out.println("DEBUG: " + e.getMessage());
 		}
 		return blogentries;
 	}
