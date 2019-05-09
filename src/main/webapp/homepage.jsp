@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
+<%@ page import ="java.util.Collections"%>
+<%@ page import ="com.grimreapers.blog.model.BlogEntry"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,7 +50,7 @@
       <div class="container">
         <form action="/postblogentry" method="post">
           <div class="form-group">
-            <input type="text" name="title" value="" placeholder="Blog Title">
+            <input class="input-group" type="text" name="title" value="" placeholder="Blog Title">
           </div>
           <div class="form-group">
             <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
@@ -59,21 +63,30 @@
 
     <!--Blog Cards -->
     <div class="container mt-3">
+    
+<% 
+	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
+	blogPostEntries = (ArrayList)session.getAttribute("allBlogPosts");
+	
+	if(blogPostEntries!=null){
+		Collections.reverse(blogPostEntries);
+		for(BlogEntry blogPostEntry : blogPostEntries){
+%>
 	   	<div class="row mb-3">
 		   	<div class="col">
 		   		<div class="card">
 			        <div class="card-header">
-			          Title
+			          <p class="h4"><%= blogPostEntry.getTitle() %> </p>
 			        </div>
 			        <div class="card-body mh-100">
 			          <blockquote class="blockquote mb-0">
-			            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper eget nulla facilisi etiam dignissim. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Et ultrices neque ornare aenean euismod elementum. Suspendisse in est ante in. Vitae tempus quam pellentesque nec nam aliquam. Egestas maecenas pharetra convallis posuere morbi leo urna molestie at. In est ante in nibh mauris. Massa massa ultricies mi quis hendrerit dolor magna eget est. Faucibus pulvinar elementum integer enim. Odio tempor orci dapibus ultrices in iaculis. Ut consequat semper viverra nam libero. Malesuada fames ac turpis egestas integer eget aliquet nibh. Suspendisse ultrices gravida dictum fusce. Ante in nibh mauris cursus mattis molestie a iaculis.</p>
+			          	<p><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
 			        </div>
 			    </div>
 		   	</div>
 	   	</div>
+ <%}} %>
     </div>
- 
 </body>
 </html>

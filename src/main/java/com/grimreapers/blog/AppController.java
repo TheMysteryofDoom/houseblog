@@ -130,7 +130,7 @@ public class AppController {
 			session.setAttribute("currentblogowner", username);
 			session.setAttribute("userPosts", blogentries);
 			session.setAttribute("allBlogPosts", allblogentries);
-
+			
 		}
 
 		return "homepage.jsp";
