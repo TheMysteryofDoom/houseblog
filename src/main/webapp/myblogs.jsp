@@ -28,6 +28,7 @@
 <% 
 	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
 	blogPostEntries = (ArrayList)session.getAttribute("userPosts");
+	int ctr = 0;
 	
 	if(blogPostEntries!=null){
 		Collections.reverse(blogPostEntries);
@@ -36,7 +37,7 @@
     <div class="container mt-3 mb-3">
 	    <div class="row mb-3">
 		    <div class="col">
-		    	<div class="card">
+		    	<div class="card" id="<%= ctr%>">
 			        <div class="card-header">
 			          <p class="h4"><%= blogPostEntry.getTitle() %> </p>
 			        </div>
@@ -54,6 +55,10 @@
 		    </div>
 	    </div>
     </div>
-<%}} %>
+ <%	
+	 ++ctr;
+	 }
+	} %>
+    </div>
 </body>
 </html>
