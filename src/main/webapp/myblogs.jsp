@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
+<%@ page import ="java.util.Collections"%>
+<%@ page import ="com.grimreapers.blog.model.BlogEntry"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,26 +25,40 @@
 	}
 %> 
 <%@include file="navigation_bars/user-nav.html" %>
-
+<% 
+	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
+	blogPostEntries = (ArrayList)session.getAttribute("userPosts");
+	int ctr = 0;
+	
+	if(blogPostEntries!=null){
+		Collections.reverse(blogPostEntries);
+		for(BlogEntry blogPostEntry : blogPostEntries){
+%>
     <div class="container mt-3 mb-3">
 	    <div class="row mb-3">
 		    <div class="col">
-		    	<div class="card">
+		    	<div class="card" id="<%= ctr%>">
 			        <div class="card-header">
-			          Title
+			          <p class="h4"><%= blogPostEntry.getTitle() %> </p>
 			        </div>
 			        <div class="card-body mh-100">
 			          <blockquote class="blockquote mb-0">
-			            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ullamcorper eget nulla facilisi etiam dignissim. Quam lacus suspendisse faucibus interdum posuere lorem ipsum. Et ultrices neque ornare aenean euismod elementum. Suspendisse in est ante in. Vitae tempus quam pellentesque nec nam aliquam. Egestas maecenas pharetra convallis posuere morbi leo urna molestie at. In est ante in nibh mauris. Massa massa ultricies mi quis hendrerit dolor magna eget est. Faucibus pulvinar elementum integer enim. Odio tempor orci dapibus ultrices in iaculis. Ut consequat semper viverra nam libero. Malesuada fames ac turpis egestas integer eget aliquet nibh. Suspendisse ultrices gravida dictum fusce. Ante in nibh mauris cursus mattis molestie a iaculis.</p>
+			          	<p><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
+			          <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
 			        </div>
 		      </div>
 			    <div class="text-right">
-			    	<button type="button" onclick="window.location.href='myblog.jsp'" class="btn btn-success">Edit</button> <button type="button" class="btn btn-danger">Delete</button>
+			    	<button type="button" onclick="window.location.href='edit/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-success">Edit</button>
+			    	<button type="button" onclick="window.location.href='delete/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-danger">Delete</button>
 			    </div>
 		    </div>
 	    </div>
     </div>
-
+ <%	
+	 ++ctr;
+	 }
+	} %>
+    </div>
 </body>
 </html>
