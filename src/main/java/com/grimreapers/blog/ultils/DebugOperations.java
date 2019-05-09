@@ -1,4 +1,4 @@
-package com.grimreapers.blog;
+package com.grimreapers.blog.ultils;
 
 import java.util.ArrayList;
 
@@ -10,8 +10,8 @@ import com.grimreapers.blog.model.BlogEntry;
 public class DebugOperations {
 	
 	public void printEntries (ArrayList<BlogEntry> blogentries) {
+		System.out.println("Parsing Blog List");
 		for (BlogEntry blogEntry : blogentries) {
-			System.out.println("Parsing Blog List");
 			System.out.println(blogEntry.getTitle());
 			System.out.println(blogEntry.getContent());
 			System.out.println("=========================");

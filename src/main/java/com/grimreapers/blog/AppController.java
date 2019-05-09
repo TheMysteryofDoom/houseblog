@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.grimreapers.blog.model.BlogEntry;
+import com.grimreapers.blog.ultils.DBOperations;
+import com.grimreapers.blog.ultils.DebugOperations;
 
 @Controller
 public class AppController {
@@ -36,6 +38,13 @@ public class AppController {
 	 * currentblogowner - String - The owner of the blog on display (May or may not
 	 * be the currently logged in user).
 	 * 
+	 * allBlogPosts - ArrayList<BlogEntry> - Every blog post in the website (Caution: May end up big.)
+	 * 
+	 * Dynamic URL Construction Guide
+	 * 
+	 * 1) /myblog/<username>/<blogpathvar> - Goes to a singluar blog post
+	 * 2) /myblog/<username> - Goes to the entire blog of a specific user
+	 * 
 	 */
 
 	@Autowired
@@ -45,8 +54,11 @@ public class AppController {
 	DebugOperations debug;
 
 	@RequestMapping("/")
-	public String homePage() {
+	public String homePage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homePage() function used");
+		
+		ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
+		session.setAttribute("allBlogPosts", allblogentries);
 
 		return "index.jsp";
 	}
@@ -54,14 +66,15 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		System.out.println("DEBUG: loginPage() function used");
-
+		
 		return "login.jsp";
 	}
 
 	@RequestMapping(value = "/editprofile", method = RequestMethod.GET)
-	public String editProfilePage() {
+	public String editProfilePage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: editProfilePage() function used");
-
+		session.removeAttribute("allBlogPosts");
+		
 		return "editprofile.jsp";
 	}
 
@@ -69,7 +82,7 @@ public class AppController {
 	public String updateProfilePage(@RequestParam("oldpassword") String oldpassword,
 			@RequestParam("newpassword") String newpassword, @RequestParam("repeatpassword") String repeatpassword,HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: updateProfilePage() function used");
-		
+		session.removeAttribute("allBlogPosts");
 		if (newpassword.equals(repeatpassword)) {
 			dbOperations.updateUserPassword(session.getAttribute("username").toString(), oldpassword, newpassword);
 		}
@@ -81,7 +94,8 @@ public class AppController {
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
 
-		// TODO function that gets every post
+		ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
+		session.setAttribute("allBlogPosts", allblogentries);
 
 		return "homepage.jsp";
 	}
@@ -91,20 +105,8 @@ public class AppController {
 		System.out.println("DEBUG: homepage() function used");
 
 		session.setAttribute("currentblogowner", session.getAttribute("username").toString());
-
-		return "myblogs.jsp";
-	}
-
-	@RequestMapping(value = "/blog/{username}", method = RequestMethod.GET)
-	public String myBlogs(@PathVariable String username, HttpServletRequest request, HttpSession session) {
-		System.out.println("DEBUG: variablehomepage() function used");
-
-		if (dbOperations.doesUserExist(username) == false) {
-			return "homepage.jsp"; // If we can remap this into a 404 page that would be nice - Nolan.
-		}
-
-		session.setAttribute("currentblogowner", username);
-		session.setAttribute("userPosts", dbOperations.retriveUserPosts(username));
+		session.removeAttribute("allBlogPosts");
+		
 		return "myblogs.jsp";
 	}
 
@@ -120,12 +122,14 @@ public class AppController {
 			HttpSession newSession = request.getSession();
 			session = newSession;
 			ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(username);
+			ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
 
-			debug.printEntries(blogentries);
+			debug.printEntries(allblogentries);
 
 			session.setAttribute("username", username);
 			session.setAttribute("currentblogowner", username);
 			session.setAttribute("userPosts", blogentries);
+			session.setAttribute("allBlogPosts", allblogentries);
 
 		}
 
@@ -149,7 +153,7 @@ public class AppController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupUser(@RequestParam("username") String username, @RequestParam("password") String password,
 			@RequestParam("repeatpassword") String repeatpassword) {
-		System.out.println("DEBUG: signupUser() function used");
+		System.out.println("DEBUG: signupUser() function used");	
 		System.out.println("DEBUG: Username:" + username);
 		System.out.println("DEBUG: Password:" + password);
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
@@ -170,21 +174,37 @@ public class AppController {
 	}
 
 	@RequestMapping("/blog")
-	public String blogPage() {
+	public String blogPage(HttpServletRequest request,
+			HttpSession session) {
 		System.out.println("DEBUG: blogPage() function used");
-
+		session.removeAttribute("allBlogPosts");
+		
 		return "blog.jsp";
 	}
 
-	@RequestMapping(value = "/blog/{username}/{blogpathvar}", method = RequestMethod.GET)
+	@RequestMapping(value = "/myblog/{username}/{blogpathvar}", method = RequestMethod.GET)
 	public String blogPage(@PathVariable String username, @PathVariable String blogpathvar, HttpServletRequest request,
 			HttpSession session) {
 		System.out.println("DEBUG: variableBlogPage() function used");
-
+		session.removeAttribute("allBlogPosts");
 		session.setAttribute("currentblogowner", username);
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
 		return "blog.jsp";
+	}
+	
+
+	@RequestMapping(value = "/myblog/{username}", method = RequestMethod.GET)
+	public String myBlogs(@PathVariable String username, HttpServletRequest request, HttpSession session) {
+		System.out.println("DEBUG: variablehomepage() function used");
+		session.removeAttribute("allBlogPosts");
+		if (dbOperations.doesUserExist(username) == false) {
+			return "homepage.jsp"; // If we can remap this into a 404 page that would be nice - Nolan.
+		}
+
+		session.setAttribute("currentblogowner", username);
+		session.setAttribute("userPosts", dbOperations.retriveUserPosts(username));
+		return "myblogs.jsp";
 	}
 
 	@RequestMapping(value = "/postblogentry", method = RequestMethod.POST)
@@ -197,7 +217,9 @@ public class AppController {
 		}
 		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
 		session.setAttribute("userPosts", blogentries);
-
+		ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
+		session.setAttribute("allBlogPosts", allblogentries);
+		
 		return "homepage.jsp";
 	}
 
