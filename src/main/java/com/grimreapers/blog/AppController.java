@@ -65,7 +65,7 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginPage() function used");
-		
+		session.removeAttribute("error");
 		return "login.jsp";
 	}
 
@@ -103,9 +103,9 @@ public class AppController {
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
-
+		
 		session.invalidate();
-
+		
 		if (dbOperations.passCheck(username, password)) {
 
 			HttpSession newSession = request.getSession();
@@ -120,6 +120,10 @@ public class AppController {
 			session.setAttribute("userPosts", blogentries);
 			session.setAttribute("allBlogPosts", allblogentries);
 			
+		} else {
+			HttpSession errorSession = request.getSession();
+			session = errorSession;
+			errorSession.setAttribute("error", true);
 		}
 
 		return "homepage.jsp";
@@ -129,26 +133,31 @@ public class AppController {
 	public String logoutUser(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: logoutUser() function used");
 		session.invalidate();
-		return "index.jsp";
+		return "/";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String signupPage() {
+	public String signupPage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: signupPage() function used");
-
+		session.invalidate();
 		return "signup.jsp";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupUser(@RequestParam("username") String username, @RequestParam("password") String password,
-			@RequestParam("repeatpassword") String repeatpassword) {
+			@RequestParam("repeatpassword") String repeatpassword, HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: signupUser() function used");	
 		System.out.println("DEBUG: Username:" + username);
 		System.out.println("DEBUG: Password:" + password);
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
-
+		
+		session.invalidate();
+		
 		if (!password.equals(repeatpassword)) {
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
+			HttpSession errorSession = request.getSession();
+			session = errorSession;
+			session.setAttribute("error", 1);
 			return "signup.jsp";
 		}
 
@@ -250,7 +259,7 @@ public class AppController {
 		session.setAttribute("currentblogowner", username);
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
-		return "blog.jsp";
+		return "redirect:/blog.jsp";
 	}
 
 	// Use this link on edit buttons found outside of editblog.jsp.
@@ -271,7 +280,7 @@ public class AppController {
 
 		session.setAttribute("viewSingleEntry", dbOperations.viewBlogEntry(username, blogpathvar));
 
-		return "editblog.jsp";
+		return "redirect:/editblog.jsp";
 	}
 
 	// Use this link on the edit button found inside editblog.jsp.
@@ -287,15 +296,15 @@ public class AppController {
 		session.setAttribute("currentblogowner", session.getAttribute("username"));
 		session.setAttribute("userPosts", dbOperations.retriveUserPosts(session.getAttribute("username").toString()));
 
-		return "myblogs.jsp";
+		return "redirect:/myblog";
 	}
 
-	@RequestMapping(value = "/myblog/{username}/{blogpathvar}/delete", method =RequestMethod.DELETE)
+	@RequestMapping(value = "/myblog/{username}/{blogpathvar}/delete", method =RequestMethod.GET)
 	public String deleteUserBlogPost(@PathVariable String username, @PathVariable String blogpathvar,
 			HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: deleteUserBlogPost() function used");
 		session.removeAttribute("allBlogPosts");
-
+		
 		if (session.getAttribute("username").toString().equals(username)) {
 			dbOperations.deleteBlogPost(username, blogpathvar);
 		} else {
@@ -305,7 +314,7 @@ public class AppController {
 		session.setAttribute("currentblogowner", session.getAttribute("username"));
 		session.setAttribute("userPosts", dbOperations.retriveUserPosts(session.getAttribute("username").toString()));
 
-		return "myblogs.jsp";
+		return "redirect:/myblog";
 	}
 
 }
