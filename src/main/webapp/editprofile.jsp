@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
-<body>
+<body class="background-image">
 <% if(session.getAttribute("username") == null){
 	 String site = new String("./login.jsp");
      response.setStatus(response.SC_MOVED_TEMPORARILY);
