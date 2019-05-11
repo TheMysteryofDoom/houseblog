@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body id="homepage">
+<body id="homepage" class="background-image">
   <!--Navigation Bar-->
 	<% if(session.getAttribute("username") == null){
 		 String site = new String("./login.jsp");
@@ -34,9 +34,9 @@
          <form class="col">
            <div class="form-inline">
                 <div class="input-group mb-3 w-100">
-                  <input type="text" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
+                  <input type="text" id="search" class="form-control" placeholder="Search Title" aria-label="Searh Title" aria-describedby="basic-addon2">
                     <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" id="search" type="submit">Search</button>
+                      <button class="btn btn-danger" id="clear-btn">Clear</button>
                     </div>
                 </div>
 			</div>
@@ -73,6 +73,7 @@
 		Collections.reverse(blogPostEntries);
 		for(BlogEntry blogPostEntry : blogPostEntries){
 %>
+	<div class="data-cards">
 	   	<div class="row mb-3">
 		   	<div class="col">
 		   		<div class="card" id="<%= ctr%>">
@@ -81,17 +82,43 @@
 			        </div>
 			        <div class="card-body mh-100">
 			          <blockquote class="blockquote mb-0">
-			          	<p><%= blogPostEntry.getContent() %> </p>
+			          	<p class="ellipsis"><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
-               		  <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
+               		  <a href="/myblog/<%=blogPostEntry.getAuthor()%>/<%=blogPostEntry.getBlogpathvar()%>" class="stretched-link"></a>
 			        </div>
 			    </div>
 		   	</div>
 	   	</div>
+	</div>
  <%	
 	 ++ctr;
 	 }
 	} %>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#clear-btn").hide();
+		
+	    $("#search").on('input',function(){
+	        var matcher = new RegExp($(this).val(), 'gi');
+	        $('.data-cards').show().not(function(){
+	            return matcher.test($(this).find('.h4').text())
+	        }).hide();
+	    })	   
+	    
+		$("#search").keyup(function(){
+	        if(!this.value){
+	        	$("#clear-btn").hide();
+	        } else{
+	        	$("#clear-btn").show();
+	    	}
+	    });
+	    
+	    $("#clear-btn").click(function(){
+	    	$("#search").val('');
+	    })
+	})
+</script>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import ="com.grimreapers.blog.model.BlogEntry"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
-<body>
+<body class="background-image">
 <% if(session.getAttribute("username") == null){
 	 String site = new String("./login.jsp");
      response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -21,18 +22,26 @@
 	}
 %> 
 	
+<%
+	if(session.getAttribute("viewSingleEntry") !=null){
+		BlogEntry blogEntry = (BlogEntry)session.getAttribute("viewSingleEntry");
+		String currentblogowner = session.getAttribute("currentblogowner").toString();
+	
+%>
 <%@include file="navigation_bars/user-nav.html" %>
      <div class="container p-4">
-        <form action="/editblogentry" method="post">
+        <form action="/myblog/<%=currentblogowner%>/<%=blogEntry.getBlogpathvar()%>/edit" method="post">
           <div class="form-group">
-            <input type="text" name="title" value="" placeholder="Blog Title">
+            <input class="form-control" cols="30" type="text" name="title" value="<%= blogEntry.getTitle() %>" placeholder="Blog Title">
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="content" rows="8" cols="80" value="" placeholder="Write Something..." ></textarea>
+            <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..." ><%= blogEntry.getContent()%></textarea>
           </div>
           <div class="text-right">
           	<button type="submit" class="btn btn-success">Edit</button>
           </div>
         </form>
     </div>
+    
+ <% } %>
 </body>
