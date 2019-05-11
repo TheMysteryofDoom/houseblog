@@ -31,7 +31,7 @@
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="oldpassword" type="text"
+						<input class="form-control" name="oldpassword" type="password"
 							placeholder="Old Password">
 					</div>
 				</div>
