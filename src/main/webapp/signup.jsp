@@ -25,29 +25,56 @@
 	<%@include file="navigation_bars/login-signup-nav.html" %>
 
 	<div class="container" style="height: 90%;">
-	<% if(session.getAttribute("error")!=null){ %>
+	<% if(session.getAttribute("error")!=null){ %> <!-- Checks if error (passwords do not match) exists -->
 			<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4" method="post" action="/signup">
 				<div class="form-row">
 					<p class="h4"><b>&nbsp;Register to Blogsite</b></p>
 				</div>
 				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input class="form-control" name="username" type="text"
+				<!-- Checking if empty username field -->
+					<% if (session.getAttribute("username") == null) { %>
+						<div class="col-12 mb-3">
+							<input class="form-control" name="username" type="text"
+								placeholder="Username" style="border-color:red">
+							<p class="font-size-sm " style="color:red"> &nbsp;Please enter username. </p>
+						</div>
+					<% } else { %> 
+						<div class="col-12 mb-3">
+							<input class="form-control" name="username" type="text"
 							placeholder="Username">
-					</div>
+						</div>
+					<% } %>
 				</div>
 				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input class="form-control" name="password" type="password"
-							placeholder="Password" style="border-color:red">
-					</div>
+				<!-- Checking if empty password field -->
+					<% if (session.getAttribute("password") == null) { %>
+						<div class="col-12 mb-3">
+							<input class="form-control" name="password" type="password"
+								placeholder="Password" style="border-color:red">
+							<p class="font-size-sm " style="color:red"> &nbsp;Please enter password. </p>
+						</div>
+					<% } else { %> 
+						<div class="col-12 mb-3">
+							<input class="form-control" name="password" type="text"
+							placeholder="Password">
+						</div>
+					<% } %>
 				</div>
 				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input class="form-control" name="repeatpassword" type="password"
-							placeholder="Repeat Password" style="border-color:red">
-					</div>
+				<!-- Checking if Repeat Password matches Password field -->
+					<% if (session.getAttribute("password") == null) { %>
+						<div class="col-12 mb-3">
+							<input class="form-control" name="repeatpassword" type="password"
+								placeholder="Repeat Password" style="border-color:red">
+							<p class="font-size-sm " style="color:red"> &nbsp;Passwords do not match. </p>
+						</div>
+					<% } else { %> 
+						<div class="col-12 mb-3">
+							<input class="form-control" name="repeatpassword" type="password"
+							placeholder="Repeat Password">
+						</div>
+					<% } %>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
