@@ -13,11 +13,10 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		crossorigin="anonymous">
-	
 	<link rel="stylesheet" type="text/css" href="style.css">
-
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="background-image">
 <% if(session.getAttribute("username") == null){
 	 String site = new String("./login.jsp");
      response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -26,8 +25,11 @@
 %> 
 <%@include file="navigation_bars/user-nav.html" %>
 <% 
-	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
-	blogPostEntries = (ArrayList)session.getAttribute("userPosts");
+	if(session.getAttribute("username") != null){
+		List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
+		blogPostEntries = (ArrayList)session.getAttribute("userPosts");
+		String currentblogowner = session.getAttribute("currentblogowner").toString();
+
 	int ctr = 0;
 	
 	if(blogPostEntries!=null){
@@ -43,22 +45,21 @@
 			        </div>
 			        <div class="card-body mh-100">
 			          <blockquote class="blockquote mb-0">
-			          	<p><%= blogPostEntry.getContent() %> </p>
+			          	<p class="ellipsis"><%= blogPostEntry.getContent() %> </p>
 			          </blockquote>
-			          <a href="blog/<%=blogPostEntry.getBlogpathvar() %>" class="stretched-link"></a>
+			          <a href="/myblog/<%=blogPostEntry.getAuthor()%>/<%=blogPostEntry.getBlogpathvar()%>" class="stretched-link"></a>
 			        </div>
 		      </div>
 			    <div class="text-right">
-			    	<button type="button" onclick="window.location.href='edit/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-success">Edit</button>
-			    	<button type="button" onclick="window.location.href='delete/<%=blogPostEntry.getBlogpathvar()%>'" class="btn btn-danger">Delete</button>
+			    	<button type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/edit'" class="btn btn-success">Edit</button>
+			    	<button type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/delete'" class="btn btn-danger" >Delete</button>
+			    	
 			    </div>
 		    </div>
 	    </div>
     </div>
- <%	
-	 ++ctr;
-	 }
-	} %>
-    </div>
+ <%	++ctr;}
+	} 
+}%>
 </body>
 </html>

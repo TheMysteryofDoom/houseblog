@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
-<body>
+<body class="background-image">
 <% if(session.getAttribute("username") == null){
 	 String site = new String("./login.jsp");
      response.setStatus(response.SC_MOVED_TEMPORARILY);
@@ -31,7 +31,7 @@
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="oldpassword" type="text"
+						<input class="form-control" name="oldpassword" type="password"
 							placeholder="Old Password">
 					</div>
 				</div>

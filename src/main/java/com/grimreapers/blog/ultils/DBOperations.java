@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 
 import com.google.api.core.ApiFuture;
@@ -27,6 +29,17 @@ public class DBOperations {
 
 	// private Firestore db = FirestoreClient.getFirestore();
 	// private FirebaseAuth auth = FirebaseAuth.getInstance();
+	
+	public HttpSession sessionCleaner(HttpSession session) {
+		session.removeAttribute("allBlogPosts");
+		session.removeAttribute("usernamepassworderror");
+		session.removeAttribute("repeatpasswordnotmatching");
+		session.removeAttribute("cannotpostblog");
+		session.removeAttribute("cannoteditblog");
+		session.removeAttribute("cannotdeleteblog");
+		
+		return session;
+	}
 
 	public boolean registerNewUser(String username, String password) {
 		FirebaseAuth auth = FirebaseAuth.getInstance();
