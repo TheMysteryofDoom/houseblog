@@ -52,8 +52,8 @@ public class AppController {
 	 * usernamepassworderror - Boolean(Always True) - Attached when the users
 	 * password is wrong
 	 * 
-	 * repeatpasswordnotmatching - Boolean(Always True) - Attached when the users
-	 * password is wrong
+	 * repeatpasswordnotmatching - Boolean(Always True) - Attached when the users Repeat
+	 * password field doesn't match the password.
 	 * 
 	 * cannotpostblog - Boolean(Always True) - Attached when the user left the title
 	 * or description blank when posting a blog
