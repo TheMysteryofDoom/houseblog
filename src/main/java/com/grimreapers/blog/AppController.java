@@ -85,7 +85,7 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginPage() function used");
-		session.removeAttribute("error");
+		session = dbOperations.sessionCleaner(session);
 		return "login.jsp";
 	}
 
