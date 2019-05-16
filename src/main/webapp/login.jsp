@@ -23,60 +23,27 @@
 	<!-- navigation bar included here -->
 	<%@include file="navigation_bars/login-signup-nav.html" %>
 	<div class="container" style="height: 90%;">
-		<% if(session.getAttribute("error")!=null){ %> <!-- Checks if error exists -->
 				<div class="row h-100 justify-content-center align-items-center">
 			<form class="col-4" method="post" action="/homepage">
 				<div class="form-row">
 					<p class="h4"><b>&nbsp;Login to Blogsite</b></p>
 				</div>
+				
+				<% if(request.getAttribute("usernamepassworderror")!=null
+					|| request.getAttribute("usernamepasswordempty")!=null){ %>
 				<div class="form-row">
-				<!-- Checking if empty username field -->
-					<% if (session.getAttribute("username") == null) { %>
-						<div class="col-12 mb-3">
-							<input class="form-control" name="username" type="text"
-								placeholder="Username" style="border-color:red">
-							<p class="font-size-sm " style="color:red"> &nbsp;Please enter username. </p>
-						</div>
-					<% } else { %> 
-						<div class="col-12 mb-3">
-							<input class="form-control" name="username" type="text"
-							placeholder="Username">
-						</div>
-					<% } %>
-				</div>
-				<div class="form-row">
-				<!-- Checking if empty password field -->
-					<% if (session.getAttribute("password") == null) { %>
-						<div class="col-12 mb-3">
-							<input class="form-control" name="password" type="password"
-								placeholder="Password" style="border-color:red">
-							<p class="font-size-sm " style="color:red"> &nbsp;Please enter password. </p>
-						</div>
-					<% } else { %>
-						<div class="col-12 mb-3">
-							<input class="form-control" name="password" type="password"
-							placeholder="Password">
-						</div>
-					<% } %>
+					<div class="col-12 mb-3">
+						<input class="form-control" name="username" type="text"
+							placeholder="Username" style="border-color:red">
+					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="btn btn-dark btn-sm btn-block" type="submit"
-							value="Login">
-					</div>
-					
-					<div class="form-row">
-						<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>
+						<input class="form-control" name="password" type="password"
+							placeholder="Password" style="border-color:red">
 					</div>
 				</div>
-			</form>
-		</div>
-		<% } else {%>
-		<div class="row h-100 justify-content-center align-items-center">
-			<form class="col-4" method="post" action="/homepage">
-				<div class="form-row">
-					<p class="h4"><b>&nbsp;Login to Blogsite</b></p>
-				</div>
+				<% } else { %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
 						<input class="form-control" name="username" type="text"
@@ -89,19 +56,25 @@
 							placeholder="Password">
 					</div>
 				</div>
+				<% } %>
+				<div class="form-row">
+					<% if(request.getAttribute("usernamepasswordempty")!=null) {%>
+						&nbsp;&nbsp;<p class="text-danger font-size-sm">Please enter username/password</p>
+					<% } else if(request.getAttribute("usernamepassworderror")!=null) { %>
+						&nbsp;&nbsp;<p class="text-danger font-size-sm">Incorrect username/password.</p>
+					<% } %>
+				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
 						<input class="btn btn-dark btn-sm btn-block" type="submit"
 							value="Login">
 					</div>
-					
-				<div class="form-row">
-				<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>
 				</div>
+				<div class="form-row">
+					<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>
 				</div>
 			</form>
 		</div>
-		<% } %>
 	</div>
 </body>
 </html>
