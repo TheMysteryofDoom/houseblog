@@ -23,7 +23,7 @@
 	     response.setStatus(response.SC_MOVED_TEMPORARILY);
 	     response.setHeader("Location", site);
 		}
-	%>
+	%> 
   <%@include file="navigation_bars/user-nav.html" %>
 
   <!--Homepage-->
@@ -47,23 +47,32 @@
 
     <!-- Add Blog -->
     <div class="container">
-      <div class="container">
-        <form action="/postblogentry" method="post">
-          <div class="form-group">
-            <input class="form-control" cols="30" type="text" name="title" value="" placeholder="Blog Title">
-          </div>
-          <div class="form-group">
-            <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
-          </div>
-          <div class="text-right">
-          	<button type="submit" class="btn btn-primary">Post</button>
-          </div>
-        </form>
-    </div>
-
+	    <div class="container">
+	       <form action="/postblogentry" method="post">
+	         <div class="form-group">
+	           <input class="form-control" cols="30" type="text" name="title" value="" placeholder="Blog Title">
+	         </div>
+	         <div class="form-group">
+	           <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
+	         </div>
+	         <div class="row justify-content-end">
+	         <% if(request.getAttribute("cannotpostblog") != null){  %> 
+	         	<div class="col text-right">
+	         		<p class="text-danger">Blog cannot be posted.</p>
+	         	</div>
+         	<%} %>
+	         	<div class="col-md-auto">
+	         		<button type="submit" class="btn btn-primary">Post</button>
+	         	</div>
+	         </div>
+	       </form>
+	   	</div>
+	</div>
     <!--Blog Cards -->
     <div class="container mt-3">
-
+		<div class="text-center" id="no-results">
+			<p class="h3 text-danger">No results found.</p>
+		</div>
 <%
 	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
 	blogPostEntries = (ArrayList)session.getAttribute("allBlogPosts");
@@ -100,6 +109,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#clear-btn").hide();
+		$("#no-results").hide();
 		
 	    $("#search").on('input',function(){
 	        var matcher = new RegExp($(this).val(), 'gi');
@@ -114,6 +124,12 @@
 	        } else{
 	        	$("#clear-btn").show();
 	    	}
+	        
+	        if ( $("div.data-cards:visible").length === 0) {
+	            $("#no-results").show( );
+			} else {
+				$("#no-results").hide();
+			}
 	    });
 	    
 	    $("#clear-btn").click(function(){
