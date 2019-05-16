@@ -50,10 +50,10 @@
 	    <div class="container">
 	       <form action="/postblogentry" method="post">
 	         <div class="form-group">
-	           <input class="form-control" cols="30" type="text" name="title" value="" placeholder="Blog Title">
+	           <input id="title" class="form-control" cols="30" type="text" name="title" value="" placeholder="Blog Title">
 	         </div>
 	         <div class="form-group">
-	           <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
+	           <textarea id="content" class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..."></textarea>
 	         </div>
 	         <div class="row justify-content-end">
 	         <% if(request.getAttribute("cannotpostblog") != null){  %> 
@@ -62,7 +62,7 @@
 	         	</div>
          	<%} %>
 	         	<div class="col-md-auto">
-	         		<button type="submit" class="btn btn-primary">Post</button>
+	         		<button id="post" type="submit" class="btn btn-primary">Post</button>
 	         	</div>
 	         </div>
 	       </form>
