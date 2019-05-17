@@ -33,26 +33,26 @@
 					|| request.getAttribute("usernamepasswordempty")!=null){ %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="username" type="text"
+						<input id="username" class="form-control" name="username" type="text"
 							placeholder="Username" style="border-color:red">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="password" type="password"
+						<input id="password" class="form-control" name="password" type="password"
 							placeholder="Password" style="border-color:red">
 					</div>
 				</div>
 				<% } else { %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="username" type="text"
+						<input id="username" class="form-control" name="username" type="text"
 							placeholder="Username">
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="password" type="password"
+						<input id="password" class="form-control" name="password" type="password"
 							placeholder="Password">
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 				</div>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="btn btn-dark btn-sm btn-block" type="submit"
+						<input id="login" class="btn btn-dark btn-sm btn-block" type="submit"
 							value="Login">
 					</div>
 				</div>
