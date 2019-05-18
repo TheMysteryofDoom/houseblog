@@ -51,8 +51,8 @@
 			        </div>
 		      </div>
 			    <div class="text-right">
-			    	<button type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/edit'" class="btn btn-success">Edit</button>
-			    	<button type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/delete'" class="btn btn-danger" >Delete</button>
+			    	<button id="editbutton" type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/edit'" class="btn btn-success">Edit</button>
+			    	<button id="deletebutton" type="button" onclick="window.location.href='/myblog/<%=currentblogowner%>/<%=blogPostEntry.getBlogpathvar()%>/delete'" class="btn btn-danger" >Delete</button>
 			    	
 			    </div>
 		    </div>

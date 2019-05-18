@@ -32,13 +32,13 @@
      <div class="container p-4">
         <form action="/myblog/<%=currentblogowner%>/<%=blogEntry.getBlogpathvar()%>/edit" method="post">
           <div class="form-group">
-            <input class="form-control" cols="30" type="text" name="title" value="<%= blogEntry.getTitle() %>" placeholder="Blog Title">
+            <input id="title" class="form-control" cols="30" type="text" name="title" value="<%= blogEntry.getTitle() %>" placeholder="Blog Title">
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..." ><%= blogEntry.getContent()%></textarea>
+            <textarea id="content" class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..." ><%= blogEntry.getContent()%></textarea>
           </div>
           <div class="text-right">
-          	<button type="submit" class="btn btn-success">Save</button>
+          	<button id="submit" type="submit" class="btn btn-success">Save</button>
           </div>
         </form>
     </div>
