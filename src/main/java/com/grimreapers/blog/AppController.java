@@ -180,7 +180,7 @@ public class AppController {
 		if(username.trim().isEmpty() || password.trim().isEmpty()){
 			request.setAttribute("usernamepasswordsignupempty", true);
 			return "/signup.jsp";
-		}else if (!password.equals(repeatpassword)) {
+		} else if (!password.equals(repeatpassword)) {
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
 			request.setAttribute("repeatpasswordnotmatching", true);
 			return "signup.jsp";
