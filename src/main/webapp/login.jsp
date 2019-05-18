@@ -58,17 +58,17 @@
 				</div>
 				<% } %>
 				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input id="login" class="btn btn-dark btn-sm btn-block" type="submit"
-							value="Login">
-					</div>
-				</div>
-				<div class="form-row">
 					<% if(request.getAttribute("usernamepasswordempty")!=null) {%>
 						&nbsp;&nbsp;<p class="text-danger font-size-sm">Please enter username/password</p>
 					<% } else if(request.getAttribute("usernamepassworderror")!=null) { %>
 						&nbsp;&nbsp;<p class="text-danger font-size-sm">Incorrect username/password.</p>
 					<% } %>
+				</div>
+				<div class="form-row">
+					<div class="col-12 mb-3">
+						<input id="login" class="btn btn-dark btn-sm btn-block" type="submit"
+							value="Login">
+					</div>
 				</div>
 				<div class="form-row">
 					<p class="font-size-sm ">&nbsp;&nbsp; New to Blogsite? <a href="/signup.jsp">Sign up now</a></p>

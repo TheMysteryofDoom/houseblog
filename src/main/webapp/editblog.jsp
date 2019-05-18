@@ -38,7 +38,7 @@
             <textarea class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..." ><%= blogEntry.getContent()%></textarea>
           </div>
           <div class="text-right">
-          	<button type="submit" class="btn btn-success">Edit</button>
+          	<button type="submit" class="btn btn-success">Save</button>
           </div>
         </form>
     </div>
