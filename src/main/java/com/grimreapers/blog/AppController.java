@@ -115,10 +115,11 @@ public class AppController {
 	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
 	public String homepage(HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: homepage() function used");
-
+		
 		ArrayList<BlogEntry> allblogentries = dbOperations.getAllPosts();
 		session.setAttribute("allBlogPosts", allblogentries);
-
+		
+		
 		return "homepage.jsp";
 	}
 
@@ -126,10 +127,12 @@ public class AppController {
 	public String loginUser(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpServletRequest request, HttpSession session) {
 		System.out.println("DEBUG: loginUser() function used");
-
+		
 		session.invalidate();
-
-		if (dbOperations.passCheck(username, password)) {
+		if(username.trim().isEmpty() || password.trim().isEmpty()){
+			request.setAttribute("usernamepasswordempty", true);
+			return "/login.jsp";
+		}else if (dbOperations.passCheck(username, password)) {
 
 			HttpSession newSession = request.getSession();
 			session = newSession;
@@ -144,10 +147,8 @@ public class AppController {
 			session.setAttribute("allBlogPosts", allblogentries);
 
 		} else {
-			HttpSession errorSession = request.getSession();
-			errorSession.setAttribute("usernamepassworderror", true);
-			session = errorSession;
-			errorSession.setAttribute("error", true);
+			request.setAttribute("usernamepassworderror", true);
+			return "/login.jsp";
 		}
 
 		return "homepage.jsp";
@@ -176,13 +177,10 @@ public class AppController {
 		System.out.println("DEBUG: Repeated Password:" + repeatpassword);
 
 		session.invalidate();
-
+		
 		if (!password.equals(repeatpassword)) {
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
-			session.setAttribute("repeatpasswordnotmatching", true);
-			HttpSession errorSession = request.getSession();
-			session = errorSession;
-			session.setAttribute("error", 1);
+			request.setAttribute("repeatpasswordnotmatching", true);
 			return "signup.jsp";
 		}
 
@@ -204,7 +202,7 @@ public class AppController {
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.postBlog(session.getAttribute("username").toString(), title, content);
 		} else {
-			session.setAttribute("cannotpostblog", true);
+			request.setAttribute("cannotpostblog", true);
 		}
 		ArrayList<BlogEntry> blogentries = dbOperations.retriveUserPosts(session.getAttribute("username").toString());
 		session.setAttribute("userPosts", blogentries);
