@@ -37,6 +37,11 @@
           <div class="form-group">
             <textarea id="content" class="form-control" name="content" rows="8" cols="80" placeholder="Write Something..." ><%= blogEntry.getContent()%></textarea>
           </div>
+   	        <% if(session.getAttribute("cannoteditblog") != null){  %> 
+	         	<div class="col text-right">
+	         		<p class="text-danger">Blog post cannot be saved.</p>
+	         	</div>
+         	<%} %>
           <div class="text-right">
           	<button id="submit" type="submit" class="btn btn-success">Save</button>
           </div>
