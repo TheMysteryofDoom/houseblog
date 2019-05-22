@@ -47,6 +47,9 @@
     
 
    <div class="container mt-3">
+	<div class="text-center" id="no-results">
+		<p class="h3 text-danger">No results found.</p>
+	</div>
 <% 
 	List<BlogEntry> blogPostEntries = new ArrayList<BlogEntry>();
 	blogPostEntries = (ArrayList)session.getAttribute("allBlogPosts");
@@ -83,6 +86,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#clear-btn").hide();
+		$("#no-results").hide();
 		
 	    $("#search").on('input',function(){
 	        var matcher = new RegExp($(this).val(), 'gi');
@@ -97,6 +101,12 @@
 	        } else{
 	        	$("#clear-btn").show();
 	    	}
+	        
+	        if ( $("div.data-cards:visible").length === 0) {
+	            $("#no-results").show( );
+			} else {
+				$("#no-results").hide();
+			}
 	    });
 	    
 	    $("#clear-btn").click(function(){

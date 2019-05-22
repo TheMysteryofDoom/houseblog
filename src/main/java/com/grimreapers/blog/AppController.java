@@ -296,6 +296,7 @@ public class AppController {
 			System.out.println("DEBUG: Cannot edit someone else's blog entry.");
 			session.setAttribute("userPosts",
 					dbOperations.retriveUserPosts(session.getAttribute("username").toString()));
+			
 			return "myblogs.jsp";
 		}
 
@@ -311,11 +312,12 @@ public class AppController {
 			HttpSession session) {
 		System.out.println("DEBUG: editUserBlogPost() function used");
 		session = dbOperations.sessionCleaner(session);
-
+			
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.editBlog(username, blogpathvar, title, content);
 		} else {
 			session.setAttribute("cannoteditblog", true);
+			return "redirect:/editblog.jsp";
 		}
 
 		session.setAttribute("currentblogowner", session.getAttribute("username"));
