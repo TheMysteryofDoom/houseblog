@@ -87,7 +87,7 @@
 				<% } %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input id="register" class="btn btn-dark btn-sm btn-block" type="submit"
+						<input id="register" class="btn btn-dark btn-sm btn-block" id="register" type="submit"
 							value="Register">
 					</div>
 				</div>
