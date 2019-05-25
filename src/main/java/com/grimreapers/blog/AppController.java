@@ -7,14 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.grimreapers.blog.model.BlogEntry;
 import com.grimreapers.blog.ultils.DBOperations;
@@ -180,7 +176,11 @@ public class AppController {
 		if(username.trim().isEmpty() || password.trim().isEmpty()){
 			request.setAttribute("usernamepasswordsignupempty", true);
 			return "/signup.jsp";
+<<<<<<< HEAD
 		}else if (!password.equals(repeatpassword)) {
+=======
+		} else if (!password.equals(repeatpassword)) {
+>>>>>>> e46474545728b5d909a43d22ed5a19560eadcb81
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
 			request.setAttribute("repeatpasswordnotmatching", true);
 			return "signup.jsp";
@@ -300,6 +300,7 @@ public class AppController {
 			System.out.println("DEBUG: Cannot edit someone else's blog entry.");
 			session.setAttribute("userPosts",
 					dbOperations.retriveUserPosts(session.getAttribute("username").toString()));
+			
 			return "myblogs.jsp";
 		}
 
@@ -315,11 +316,12 @@ public class AppController {
 			HttpSession session) {
 		System.out.println("DEBUG: editUserBlogPost() function used");
 		session = dbOperations.sessionCleaner(session);
-
+			
 		if (!title.equals("") && !content.equals("")) {
 			dbOperations.editBlog(username, blogpathvar, title, content);
 		} else {
 			session.setAttribute("cannoteditblog", true);
+			return "redirect:/editblog.jsp";
 		}
 
 		session.setAttribute("currentblogowner", session.getAttribute("username"));
