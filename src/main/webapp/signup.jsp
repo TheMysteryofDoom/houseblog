@@ -91,7 +91,6 @@
 							value="Register">
 					</div>
 				</div>
-				
 			</form>
 		</div>
 	</div>
