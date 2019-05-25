@@ -102,7 +102,7 @@ public class AppController {
 		if (newpassword.equals(repeatpassword)) {
 			dbOperations.updateUserPassword(session.getAttribute("username").toString(), oldpassword, newpassword);
 		} else {
-			session.setAttribute("repeatpasswordnotmatching", true);
+			request.setAttribute("repeatpasswordnotmatching", true);
 		}
 
 		return "editprofile.jsp";
@@ -176,11 +176,7 @@ public class AppController {
 		if(username.trim().isEmpty() || password.trim().isEmpty()){
 			request.setAttribute("usernamepasswordsignupempty", true);
 			return "/signup.jsp";
-<<<<<<< HEAD
 		}else if (!password.equals(repeatpassword)) {
-=======
-		} else if (!password.equals(repeatpassword)) {
->>>>>>> e46474545728b5d909a43d22ed5a19560eadcb81
 			System.out.println("DEBUG:" + "Password and Repeat Password do not match.");
 			request.setAttribute("repeatpasswordnotmatching", true);
 			return "signup.jsp";

@@ -29,27 +29,56 @@
 				<div class="form-row">
 					<p class="h4"><b>&nbsp;Edit Profile</b></p>
 				</div>
+				<% if (request.getAttribute("repeatpasswordnotmatching") != null){ %>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="oldpassword" type="password"
+								placeholder="Old Password" style="border-color:red">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="newpassword" type="password"
+								placeholder="New Password" style="border-color:red">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="repeatpassword" type="password"
+								placeholder="Repeat New Password" style="border-color:red">
+						</div>
+					</div>
+				<% } else { %>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="oldpassword" type="password"
+								placeholder="Old Password">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="newpassword" type="password"
+								placeholder="New Password">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-12 mb-3">
+							<input class="form-control" name="repeatpassword" type="password"
+								placeholder="Repeat New Password">
+						</div>
+					</div>
+				<% } %>
+				
+				<% if (request.getAttribute("repeatpasswordnotmatching")!=null) { %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="oldpassword" type="password"
-							placeholder="Old Password">
+						<p class="text-danger font-size-sm">Passwords do not match.</p>
 					</div>
 				</div>
+				<% } %>
 				<div class="form-row">
 					<div class="col-12 mb-3">
-						<input class="form-control" name="newpassword" type="password"
-							placeholder="New Password">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input class="form-control" name="repeatpassword" type="password"
-							placeholder="Repeat New Password">
-					</div>
-				</div>
-				<div class="form-row">
-					<div class="col-12 mb-3">
-						<input class="btn btn-dark btn-sm btn-block" type="submit"
+						<input class="btn btn-dark btn-sm btn-block" id=submit type="submit"
 							value="Save Profile">
 					</div>
 				</div>
